@@ -51,7 +51,9 @@ namespace TaskTurner.Models
 
     public enum TaskImportance{
         Low,
-        High
+        Medium,
+        High,
+        Critical
         }
 }
 
