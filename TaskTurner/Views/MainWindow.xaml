@@ -37,7 +37,7 @@
                     <Path Data="{StaticResource NewTaskIcon}" 
                           Fill="{StaticResource OnAccent}"/>
                 </Viewbox>
-                
+
             </Button>
             <!--Search Task bar-->
             <TextBox x:Name="TaskSearchBox"
@@ -48,7 +48,7 @@
                    Grid.Row="1" 
                    Content="Поиск задач..."
                    VerticalContentAlignment="Center"
-                   Margin="35 0 0 0"
+                   Margin="35 0 15 0"
                    Foreground="{StaticResource Borders}"
                    Visibility="{Binding Text.IsEmpty, ElementName=TaskSearchBox, Converter={StaticResource BooleanToVisibilityConverter}}" Cursor=""/>
             <Button Style="{StaticResource SearchButton}"
@@ -69,8 +69,85 @@
                     <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource Borders}"/>
                 </Viewbox>
             </Button>
+            
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="66"/>
+            </Grid.RowDefinitions>
+            <Grid Margin="10 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Название задачи"
+                           Style="{StaticResource Title}"
+                           VerticalAlignment="Center"/>
+                <!--Importance Badge-->
+                <Border HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        CornerRadius="5"
+                        Background="{StaticResource Importance-Crit}"
+                        Padding="20 5">
+                    <TextBlock Text="Срочно"
+                               Foreground="{StaticResource OnAccent}"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                </Border>
+                <!--Description-->
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <TextBlock Text="Краткое описание задачи."
+                               FontSize="16"
+                               Foreground="{StaticResource PlaceHolderText}"
+                               Margin="20"/>
+                </ScrollViewer>
+                <TextBlock Text="Дата: 15/06/2026"
+                           Background="{StaticResource AccentDark}"
+                           Grid.Row="2"
+                           Foreground="White"
+                           Padding="20 3"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+            </Grid>
+            <!--Check List-->
+            <Grid Grid.Row="1"
+                  Margin="0 20 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <!--List Title-->
+                <TextBlock Style="{StaticResource Title}"
+                           Text="Чек-лист задачи"
+                           VerticalAlignment="Center"
+                           Margin="20 0 0 0"/>
+                <ListView Background="Transparent"
+                          BorderThickness="0"
+                          Grid.Row="1"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Button Style="{StaticResource DeleteButton}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Content="Удалить"
+                        Margin="8 0 0 0"/>
+                <Button Style="{StaticResource EditButton}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Content="Редактировать"/>
+                <Button Style="{StaticResource ComplateButton}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Content="Заврешить"/>
+            </Grid>
         </Grid>
         <Rectangle Fill="{StaticResource TaskStatusBackground}" Grid.Column="3"/>
+        
         
     </Grid>
 </Window>

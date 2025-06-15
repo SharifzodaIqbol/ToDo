@@ -11,13 +11,23 @@
     <SolidColorBrush x:Key="OnAccent" Color="#FFFFFFFF"/>
 
     <SolidColorBrush x:Key="Borders" Color="#FFC9B5B5"/>
-
+    
+    <SolidColorBrush x:Key="PlaceHolderText" Color="#FFD4D4D4"/>
     <!--Importance Colours-->
     <SolidColorBrush x:Key="Importance-Low" Color="#FF0CAFF4"/>
     <SolidColorBrush x:Key="Importance-Med" Color="#FF2AD985"/>
     <SolidColorBrush x:Key="Importance-High" Color="#FFF4830C"/>
     <SolidColorBrush x:Key="Importance-Crit" Color="#FFCA2C2C"/>
-    
+
+    <SolidColorBrush x:Key="Button-Complate" Color="#FF2AD985"/>
+    <SolidColorBrush x:Key="Button-Complate-Over" Color="#FF65C295"/>
+    <SolidColorBrush x:Key="Button-Complate-Click" Color="#FF6BA98B"/>
+    <SolidColorBrush x:Key="Button-Edit" Color="#FFF4830C"/>
+    <SolidColorBrush x:Key="Button-Edit-Over" Color="#FFD19353"/>
+    <SolidColorBrush x:Key="Button-Edit-Click" Color="#FFBA9166"/>
+    <SolidColorBrush x:Key="Button-Delete" Color="#FFCA2C2C"/>
+    <SolidColorBrush x:Key="Button-Delete-Over" Color="#FFDA5A5A"/>
+    <SolidColorBrush x:Key="Button-Delete-Click" Color="#FFAE5151"/>
     <!--Task Progress-->
     <SolidColorBrush x:Key="Progress InProgress" Color="#FF518657"/>
     <SolidColorBrush x:Key="Progress Completed" Color="#FF4187AC"/>
