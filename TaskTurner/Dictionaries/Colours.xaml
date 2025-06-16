@@ -13,6 +13,7 @@
     <SolidColorBrush x:Key="Borders" Color="#FFC9B5B5"/>
     
     <SolidColorBrush x:Key="PlaceHolderText" Color="#FFD4D4D4"/>
+    <SolidColorBrush x:Key="PlaceHolderBorder" Color="#FF958888"/>
     <!--Importance Colours-->
     <SolidColorBrush x:Key="Importance-Low" Color="#FF0CAFF4"/>
     <SolidColorBrush x:Key="Importance-Med" Color="#FF2AD985"/>
@@ -40,5 +41,9 @@
     <SolidColorBrush x:Key="Nav.Default" Color="Transparent"/>
     <SolidColorBrush x:Key="Nav.Over" Color="#FFBCD5E2"/>
     <SolidColorBrush x:Key="Nav.Click" Color="#FF551F98"/>
+    
+    <SolidColorBrush x:Key="TaskListDescriptionUserText" Color="#FF8C8892"/>
+    
+    <SolidColorBrush x:Key="TaskListTitle" Color="#FF6F6A76"/>
     
 </ResourceDictionary>

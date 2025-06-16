@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskTurner"
+        xmlns:vm="clr-namespace:TaskTurner.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="832" Width="1280"
         MinWidth="1150" MinHeight="500"
         WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <Storyboard x:Key="Solid On Load">
             <DoubleAnimation Storyboard.TargetName="MainGrid" 
@@ -26,7 +30,7 @@
             </ThicknessAnimation>
         </Storyboard>
     </Window.Resources>
-    <Grid x:Name="MainGrid" Opacity="0" Margin="0 100 0 0">
+    <Grid x:Name="MainGrid" Opacity="1" Margin="0">
         <Grid.Triggers>
             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                 <BeginStoryboard Storyboard="{StaticResource Solid On Load}"/>
@@ -74,7 +78,8 @@
                     VerticalAlignment="Center"
                     Height="45"
                     Width="45"
-                    Margin="0 0 20 0">
+                    Margin="0 0 20 0"
+                    Command="{Binding IOpenNewWindow}">
                 <Viewbox Width="22.5" Height="22.5" 
                          VerticalAlignment="Center" 
                          HorizontalAlignment="Center">
