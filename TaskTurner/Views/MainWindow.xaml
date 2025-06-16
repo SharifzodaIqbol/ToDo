@@ -6,8 +6,26 @@
         xmlns:local="clr-namespace:TaskTurner"
         mc:Ignorable="d"
         Title="MainWindow" Height="832" Width="1280"
+        MinWidth="1150" MinHeight="500"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Window.Resources>
+        <Storyboard x:Key="Solid On Load">
+            <DoubleAnimation Storyboard.TargetName="MainGrid" 
+                             Storyboard.TargetProperty="Opacity" 
+                             From="0.2" To="1.0" Duration="0:0:1">
+            </DoubleAnimation>
+            <ThicknessAnimation Storyboard.TargetName="MainGrid"
+                                Storyboard.TargetProperty="Margin" 
+                                From="0,50,0,0" To="0,0,0,0" Duration="0:0:1.5">
+            </ThicknessAnimation>
+        </Storyboard>
+    </Window.Resources>
+    <Grid x:Name="MainGrid" Opacity="0" Margin="0 100 0 0">
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard Storyboard="{StaticResource Solid On Load}"/>
+            </EventTrigger>
+        </Grid.Triggers>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="435" />
@@ -16,6 +34,26 @@
         </Grid.ColumnDefinitions>
 
         <Rectangle Fill="{StaticResource AccentDark}"/>
+        <StackPanel Margin="10 15 10 10">
+            <!--ListIcon-->
+            <Button Style="{StaticResource TaskManagerButton}" Margin="0 0 0 10" Background="{StaticResource AccentDark}">
+                <Viewbox Width="35" Height="35">
+                    <Path Data="{StaticResource ListIcon}" Fill="White"/>
+                </Viewbox>
+            </Button>
+
+            <Button Style="{StaticResource TaskManagerButton}" Margin="0 0 0 20" Background="{StaticResource AccentDark}">
+                <Viewbox Width="35" Height="35">
+                    <Path Data="{StaticResource TickIcon}" Stroke="White" StrokeThickness="2.8"/>
+                </Viewbox>
+            </Button>
+
+            <Button Style="{StaticResource TaskManagerButton}" Background="{StaticResource AccentDark}">
+                <Viewbox Width="35" Height="35">
+                    <Path Data="{StaticResource TimerIcon}" Fill="White"/>
+                </Viewbox>
+            </Button>
+        </StackPanel>
         <Rectangle Fill="{StaticResource TaskListBackground}" Grid.Column="1"/>
         <!--Task List Grid-->
         <Grid Grid.Column="1">
