@@ -31,7 +31,7 @@ namespace TaskTurner.Views
             command.Parameters.AddWithValue("@title", title);
             command.Parameters.AddWithValue("@desc", description);
             command.ExecuteNonQuery();
-            
+
             this.DialogResult = true;
             this.Close();
         }

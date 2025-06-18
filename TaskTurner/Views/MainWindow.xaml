@@ -64,7 +64,7 @@
         </StackPanel>
         <Rectangle Fill="{StaticResource TaskListBackground}" Grid.Column="1"/>
         <!--Task List Grid-->
-        
+
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="68" />
@@ -117,7 +117,7 @@
             </Button>
 
             <!-- 👇 СПИСОК ЗАДАЧ ПОЛЬЗОВАТЕЛЯ -->
-        <ListView ItemsSource="{Binding UserTasks}"
+            <ListView ItemsSource="{Binding UserTasks}"
                   Grid.Row="2"
                   Margin="15"
                   Background="Gray"
@@ -235,7 +235,7 @@
             </Grid>
         </Grid>
         <Rectangle Fill="{StaticResource TaskStatusBackground}" Grid.Column="3"/>
-        
-        
+
+
     </Grid>
 </Window>
