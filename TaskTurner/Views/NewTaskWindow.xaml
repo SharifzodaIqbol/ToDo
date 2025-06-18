@@ -3,10 +3,49 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TaskTurner.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="NewTaskWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Добавить задачу" Height="300" Width="400" Background="{StaticResource TaskStatusBackground}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="TaskTitleBox"
+                 Grid.Row="1"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                 materialDesign:HintAssist.Hint="Введите название задачи"
+                 materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"
+                 materialDesign:HintAssist.Foreground="Gray"
+                 SelectionBrush="LightGreen"
+                 Foreground="{StaticResource TaskListTitle}"
+                 Margin="0,0,0,15"/>
+        <TextBox x:Name="TaskDescriptionBox"
+                 Grid.Row="2"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                 materialDesign:HintAssist.Hint="Введите описание задачи"
+                 materialDesign:HintAssist.Foreground="Gray"
+                 materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"
+                 SelectionBrush="LightGreen"
+                 VerticalContentAlignment="Top"
+                 HorizontalContentAlignment="Left"
+                 Foreground="{StaticResource TaskListTitle}"
+                 Height="100"/>
+        <Button Content="Добавить" 
+                Grid.Row="3"
+                HorizontalAlignment="Right"
+                Width="100"
+                Margin="0,15,0,0"
+                Background="#FF3CC641"
+                Foreground="White"
+                Cursor="Hand"
+                Click="CreateTask_Click"
+                Style="{StaticResource MaterialDesignRaisedButton}"/>
     </Grid>
 </Window>

@@ -9,9 +9,6 @@
         Title="MainWindow" Height="832" Width="1280"
         MinWidth="1150" MinHeight="500"
         WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
     <Window.Resources>
         <Storyboard x:Key="Solid On Load">
             <DoubleAnimation Storyboard.TargetName="MainGrid" 

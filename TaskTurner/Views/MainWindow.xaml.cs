@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaskTurner.ViewModels;
 
 namespace TaskTurner
 {
@@ -16,9 +17,14 @@ namespace TaskTurner
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public int UserId { get; }
+        public MainWindow(int userId)
         {
             InitializeComponent();
+            UserId = userId;
+
+            DataContext = new MainWindowViewModel(UserId);
         }
+
     }
 }
