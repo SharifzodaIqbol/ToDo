@@ -11,12 +11,10 @@ namespace TaskTurner
     {
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            // Явно создаём окно авторизации
             var authWindow = new AuthorizationWindow();
 
             Application.Current.MainWindow = authWindow;
 
-            // Показываем
             authWindow.Show();
         }
 

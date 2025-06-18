@@ -6,19 +6,12 @@ using System.Threading.Tasks;
 
 namespace TaskTurner.Models
 {
-    public class Task
+    public class TaskModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime DueData { get; set; }
-        public DateTime StartData { get; set; }
-        public bool IsCompleted { get; set; }
-        public TimeSpan Timer { get; set; }
-
-        public TaskState TaskState { get; set; }
-        public TaskCategory TaskCategory { get; set; }
-        public TaskImportance TaskImportance { get; set; }
     }
 
     public enum TaskState

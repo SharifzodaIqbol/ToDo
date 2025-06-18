@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskTurner"
         xmlns:vm="clr-namespace:TaskTurner.ViewModels"
@@ -63,59 +64,100 @@
         </StackPanel>
         <Rectangle Fill="{StaticResource TaskListBackground}" Grid.Column="1"/>
         <!--Task List Grid-->
+        
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="68" />
                 <RowDefinition Height="50" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
+
+            <!-- Заголовок и кнопка -->
             <Label Style="{StaticResource Heading1}" Content="Задачи"/>
             <Button Style="{StaticResource RoundAccentButton}" 
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Height="45"
-                    Width="45"
-                    Margin="0 0 20 0"
-                    Command="{Binding IOpenNewWindow}">
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Height="45"
+            Width="45"
+            Margin="0 0 20 0"
+            Command="{Binding IOpenNewWindow}">
                 <Viewbox Width="22.5" Height="22.5" 
-                         VerticalAlignment="Center" 
-                         HorizontalAlignment="Center">
+                 VerticalAlignment="Center" 
+                 HorizontalAlignment="Center">
                     <Path Data="{StaticResource NewTaskIcon}" 
-                          Fill="{StaticResource OnAccent}"/>
+                  Fill="{StaticResource OnAccent}"/>
                 </Viewbox>
-
             </Button>
-            <!--Search Task bar-->
+
+            <!-- Поиск -->
             <TextBox x:Name="TaskSearchBox"
-                     Style="{StaticResource TaskListSearchBox}" 
-                     Grid.Row="1"
-                     Margin="15 0"/>
+             Style="{StaticResource TaskListSearchBox}" 
+             Grid.Row="1"
+             Margin="15 0"/>
             <Label IsHitTestVisible="False"
-                   Grid.Row="1" 
-                   Content="Поиск задач..."
-                   VerticalContentAlignment="Center"
-                   Margin="35 0 15 0"
-                   Foreground="{StaticResource Borders}"
-                   Visibility="{Binding Text.IsEmpty, ElementName=TaskSearchBox, Converter={StaticResource BooleanToVisibilityConverter}}" Cursor=""/>
+           Grid.Row="1" 
+           Content="Поиск задач..."
+           VerticalContentAlignment="Center"
+           Margin="35 0 15 0"
+           Foreground="{StaticResource Borders}"
+           Visibility="{Binding Text.IsEmpty, ElementName=TaskSearchBox, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <Button Style="{StaticResource SearchButton}"
-                    Grid.Row="1"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Margin="0 0 40 0"
-                    Padding="7"
-                    Background="White"
-                    BorderBrush="Transparent"
-                    Height="40" 
-                    Width="40" Cursor="Hand">
-                <Viewbox 
-                    Width="16" 
-                    Height="16" 
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Margin="0 0 40 0"
+            Padding="7"
+            Background="White"
+            BorderBrush="Transparent"
+            Height="40" 
+            Width="40" Cursor="Hand">
+                <Viewbox Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource Borders}"/>
                 </Viewbox>
             </Button>
-            
+
+            <!-- 👇 СПИСОК ЗАДАЧ ПОЛЬЗОВАТЕЛЯ -->
+        <ListView ItemsSource="{Binding UserTasks}"
+                  Grid.Row="2"
+                  Margin="15"
+                  Background="Gray"
+                  BorderThickness="0"
+                  HorizontalContentAlignment="Stretch">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Height="120"
+                                Margin="0 8"
+                                Padding="16"
+                                Background="{DynamicResource MaterialDesignPaper}"
+                                CornerRadius="8"
+                                SnapsToDevicePixels="True"
+                                Effect="{DynamicResource MaterialDesignElevation2}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="{Binding Title}"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource PrimaryHueMidBrush}"
+                                           TextTrimming="CharacterEllipsis"
+                                           MaxHeight="30"/>
+
+                                <TextBlock Grid.Row="1"
+                               Text="{Binding Description}"
+                               FontSize="14"
+                               Foreground="Gray"
+                               TextWrapping="Wrap"
+                               TextTrimming="CharacterEllipsis"
+                               Margin="0,8,0,0"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>

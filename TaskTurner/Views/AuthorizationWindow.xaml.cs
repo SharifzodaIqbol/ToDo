@@ -9,7 +9,6 @@ namespace TaskTurner
         public AuthorizationWindow()
         {
             InitializeComponent();
-
         }
         private int GetUserId(string username)
         {

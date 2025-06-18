@@ -11,7 +11,7 @@ namespace TaskTurner
             InitializeComponent();
             EnsureDatabase();
         }
-        private void EnsureDatabase()
+        public void EnsureDatabase()
         {
             string dbFile = "users.db";
             string connectionString = $"Data Source={dbFile}";
@@ -26,7 +26,6 @@ namespace TaskTurner
             {
                 connection.Open();
 
-                // SQL: создать таблицу, если её нет
                 string createTableQuery = @"
             CREATE TABLE IF NOT EXISTS Users (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,

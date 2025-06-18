@@ -11,30 +11,11 @@ namespace TaskTurner.Views
         {
             InitializeComponent();
             _userId = userId;
-            EnsureDatabase();
         }
-
-        private void EnsureDatabase()
-        {
-            using var connection = new SQLiteConnection("Data Source=users.db");
-            connection.Open();
-            string createTable = @"
-                        CREATE TABLE IF NOT EXISTS Tasks (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        UserId INTEGER,
-                        Title TEXT NOT NULL,
-                        Description TEXT,
-                        FOREIGN KEY(UserId) REFERENCES Users(Id)
-                    );";
-
-            using var command = new SQLiteCommand(createTable, connection);
-            command.ExecuteNonQuery();
-        }
-
         private void CreateTask_Click(object sender, RoutedEventArgs e)
         {
-            string title = TaskTitleBox.Text;
-            string description = TaskDescriptionBox.Text;
+            string title = TaskTitleBox.Text.Trim();
+            string description = TaskDescriptionBox.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(title))
             {
@@ -50,7 +31,8 @@ namespace TaskTurner.Views
             command.Parameters.AddWithValue("@title", title);
             command.Parameters.AddWithValue("@desc", description);
             command.ExecuteNonQuery();
-
+            
+            this.DialogResult = true;
             this.Close();
         }
     }
