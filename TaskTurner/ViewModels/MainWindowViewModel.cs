@@ -35,6 +35,7 @@ namespace TaskTurner.ViewModels
         }
         private void LoadTasks(int userId)
         {
+            UserTasks.Clear();
             using var connection = new SQLiteConnection("Data Source=users.db");
             connection.Open();
 

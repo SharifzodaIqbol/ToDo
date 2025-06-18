@@ -45,7 +45,7 @@ namespace TaskTurner
 
             if (!File.Exists(dbPath))
             {
-                MessageBox.Show("База данных не найдена.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Неверный логин или пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

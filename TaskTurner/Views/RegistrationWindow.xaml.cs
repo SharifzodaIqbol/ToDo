@@ -32,8 +32,20 @@ namespace TaskTurner
                 Username TEXT NOT NULL,
                 Password TEXT NOT NULL
             );";
+                string createTableTasks = @"
+                        CREATE TABLE IF NOT EXISTS Tasks (
+                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        UserId INTEGER,
+                        Title TEXT NOT NULL,
+                        Description TEXT,
+                        FOREIGN KEY(UserId) REFERENCES Users(Id)
+                    );";
 
                 using (SQLiteCommand command = new SQLiteCommand(createTableQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (SQLiteCommand command = new SQLiteCommand(createTableTasks, connection))
                 {
                     command.ExecuteNonQuery();
                 }
