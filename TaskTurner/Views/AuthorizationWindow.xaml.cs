@@ -1,15 +1,16 @@
-﻿using System.Windows;
+﻿using System.Data.SQLite;
 using System.IO;
-using System.Data.SQLite;
-
+using System.Windows;
+using TaskTurner.DataService;
 namespace TaskTurner
 {
     public partial class AuthorizationWindow : Window
     {
         public AuthorizationWindow()
         {
+            DatabaseHelper.InitializeDatabase();
             InitializeComponent();
-        }
+        }            
         private int GetUserId(string username)
         {
             using (var connection = new SQLiteConnection("Data Source=users.db"))
@@ -31,7 +32,7 @@ namespace TaskTurner
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            string username = usernameBox.Text;
+            string username = usernameBox.Text.Trim();
             string password = passwordBox.Password;
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
@@ -41,39 +42,63 @@ namespace TaskTurner
             }
 
             string dbPath = "users.db";
-            string connectionString = $"Data Source={dbPath}";
 
-            if (!File.Exists(dbPath))
+            try
             {
-                MessageBox.Show("Неверный логин или пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                string query = "SELECT COUNT(*) FROM Users WHERE Username = @username AND Password = @password";
-
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                if (!File.Exists(dbPath))
                 {
-                    command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@password", password);
+                    MessageBox.Show("База данных не найдена. Зарегистрируйтесь сначала.", "Ошибка",
+                                 MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-                    long count = (long)command.ExecuteScalar();
+                using (SQLiteConnection connection = new SQLiteConnection($"Data Source={dbPath}"))
+                {
+                    connection.Open();
 
-                    if (count > 0)
+                    // 1. Проверяем существование пользователя
+                    string authQuery = "SELECT COUNT(*) FROM Users WHERE Username = @username AND Password = @password";
+                    using (SQLiteCommand command = new SQLiteCommand(authQuery, connection))
                     {
-                        int userId = GetUserId(username); // Получи ID пользователя из БД
-                        var mainWindow = new MainWindow(userId);
-                        Application.Current.MainWindow = mainWindow;
-                        mainWindow.Show();
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Неверный логин или пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        command.Parameters.AddWithValue("@username", username);
+                        command.Parameters.AddWithValue("@password", password);
+
+                        long count = Convert.ToInt64(command.ExecuteScalar());
+
+                        if (count > 0)
+                        {
+                            // 2. Получаем ID пользователя
+                            int userId = GetUserId(username);
+                            if (userId == -1)
+                            {
+                                MessageBox.Show("Ошибка получения данных пользователя.", "Ошибка",
+                                              MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+
+                            // 3. Открываем главное окно
+                            var mainWindow = new MainWindow(userId);
+                            Application.Current.MainWindow = mainWindow;
+                            mainWindow.Show();
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Неверный логин или пароль.", "Ошибка",
+                                          MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                 }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Ошибка базы данных: {ex.Message}", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

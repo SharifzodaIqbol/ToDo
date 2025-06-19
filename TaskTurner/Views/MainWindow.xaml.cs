@@ -1,5 +1,6 @@
 ﻿using System.Data.SQLite;
 using System.Windows;
+using TaskTurner.Models;
 using TaskTurner.ViewModels;
 
 namespace TaskTurner
@@ -12,6 +13,11 @@ namespace TaskTurner
             InitializeComponent();
             UserId = userId;
             DataContext = new MainWindowViewModel(UserId);
+            UserTasksListView.SelectionChanged += (s, e) =>
+            {
+                var vm = DataContext as MainWindowViewModel;
+                vm.SelectedTask = UserTasksListView.SelectedItem as TaskModel;
+            };
         }
     }
 }

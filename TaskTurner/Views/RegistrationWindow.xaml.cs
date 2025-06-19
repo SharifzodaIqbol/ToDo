@@ -1,55 +1,15 @@
 ﻿using System.Data.SQLite;
 using System.Windows;
 using System.IO;
-
+using TaskTurner.DataService;
 namespace TaskTurner
 {
     public partial class RegistrationWindow : Window
     {
         public RegistrationWindow()
         {
+            DatabaseHelper.InitializeDatabase();
             InitializeComponent();
-            EnsureDatabase();
-        }
-        public void EnsureDatabase()
-        {
-            string dbFile = "users.db";
-            string connectionString = $"Data Source={dbFile}";
-
-            // Если базы нет — создаём файл
-            if (!File.Exists(dbFile))
-            {
-                SQLiteConnection.CreateFile(dbFile);
-            }
-
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-
-                string createTableQuery = @"
-            CREATE TABLE IF NOT EXISTS Users (
-                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                Username TEXT NOT NULL,
-                Password TEXT NOT NULL
-            );";
-                string createTableTasks = @"
-                        CREATE TABLE IF NOT EXISTS Tasks (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        UserId INTEGER,
-                        Title TEXT NOT NULL,
-                        Description TEXT,
-                        FOREIGN KEY(UserId) REFERENCES Users(Id)
-                    );";
-
-                using (SQLiteCommand command = new SQLiteCommand(createTableQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-                using (SQLiteCommand command = new SQLiteCommand(createTableTasks, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
         }
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
