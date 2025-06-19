@@ -91,46 +91,63 @@
 
             <!-- Поиск -->
             <TextBox x:Name="TaskSearchBox"
-             Style="{StaticResource TaskListSearchBox}" 
-             Grid.Row="1"
-             Margin="15 0"/>
+                 Style="{StaticResource TaskListSearchBox}" 
+                 Grid.Row="1"
+                 Margin="15 0"
+                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding FilterTasksCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
             <Label IsHitTestVisible="False"
-           Grid.Row="1" 
-           Content="Поиск задач..."
-           VerticalContentAlignment="Center"
-           Margin="35 0 15 0"
-           Foreground="{StaticResource Borders}"
-           Visibility="{Binding Text.IsEmpty, ElementName=TaskSearchBox, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                   Grid.Row="1" 
+                   Content="Поиск задач..."
+                   VerticalContentAlignment="Center"
+                   Margin="35 0 15 0"
+                   Foreground="{StaticResource Borders}"
+                   Visibility="{Binding Text.IsEmpty, ElementName=TaskSearchBox, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <Button Style="{StaticResource SearchButton}"
-            Grid.Row="1"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            Margin="0 0 40 0"
-            Padding="7"
-            Background="White"
-            BorderBrush="Transparent"
-            Height="40" 
-            Width="40" Cursor="Hand">
+                    Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0 0 40 0"
+                    Padding="7"
+                    Background="White"
+                    BorderBrush="Transparent"
+                    Height="40" 
+                    Width="40" Cursor="Hand">
                 <Viewbox Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource Borders}"/>
                 </Viewbox>
             </Button>
-
-            <!-- 👇 СПИСОК ЗАДАЧ ПОЛЬЗОВАТЕЛЯ -->
+            <Button Style="{StaticResource SearchButton}"
+                    Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0 0 80 8"
+                    Command="{Binding ClearSearchCommand}">
+                <Viewbox Width="16" Height="16">
+                    <Path Data="{StaticResource CloseIcon}" Fill="{StaticResource Borders}"/>
+                </Viewbox>
+            </Button>
             <ListView x:Name="UserTasksListView"
-                      ItemsSource="{Binding UserTasks}"
+                      ItemsSource="{Binding FilteredTasksView}"
                       SelectedItem="{Binding SelectedTask}"
                       Grid.Row="2"
                       Margin="15"
-                      Background="Gray"
+                      Background="#FFF5F7FA"
                       BorderThickness="0"
                       HorizontalContentAlignment="Stretch">
-
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border CornerRadius="8" 
-                                Margin="0 5" 
-                                Background="{StaticResource MaterialDesignPaper}">
+                                Margin="0 5"
+                                BorderBrush="#FFD1C4E9"
+                                BorderThickness="1 1 1 4"
+                                Background="#FFF3E5F5">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="15" ShadowDepth="1" Opacity="0.12" Color="#7B1FA2"/>
+                            </Border.Effect>
                             <Grid Margin="10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -138,18 +155,27 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <CheckBox VerticalAlignment="Center"
-                          IsChecked="{Binding IsCompleted}"/>
+                                          IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                          CommandParameter="{Binding}"/>
                                 <StackPanel Grid.Column="1" Margin="10 0">
                                     <TextBlock Text="{Binding Title}" 
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource Importance-Med}"/>
+                                                FontWeight="Bold"
+                                                Foreground="#FF4A148C"
+                                                FontSize="18"/>
                                     <TextBlock Text="{Binding Description}"
-                               TextWrapping="Wrap"
-                               Foreground="{StaticResource Progress Late}"/>
+                                                Foreground="#FF757575"
+                                                FontSize="15"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="2"
-                           Text="{Binding Deadline, StringFormat='{}{0:dd.MM.yyyy}'}"
-                           Foreground="{StaticResource Progress Late}"/>
+                                <TextBlock Grid.Column="2">
+                        <Run Text="Дата" Foreground="#888888" FontSize="10"/>
+                        <LineBreak/>
+                        <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>
+                        <LineBreak/>
+                        <Run Text="Время" Foreground="#888888" FontSize="10"/>
+                        <LineBreak/>
+                        <Run Text="{Binding CurrentDate, StringFormat='{}{0:HH:mm}'}" FontSize="12"/>
+                                </TextBlock>
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -158,79 +184,165 @@
         </Grid>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
+                <RowDefinition Height="450"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="66"/>
+                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
             <Grid Margin="10 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="80"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Название задачи"
+                <TextBlock Text="Список задач"
                            Style="{StaticResource Title}"
                            VerticalAlignment="Center"/>
-                <!--Importance Badge-->
-                <Border HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        CornerRadius="5"
-                        Background="{StaticResource Importance-Crit}"
-                        Padding="20 5">
-                    <TextBlock Text="Срочно"
-                               Foreground="{StaticResource OnAccent}"
-                               FontWeight="Bold"
-                               FontSize="16"/>
-                </Border>
-                <!--Description-->
                 <ScrollViewer Grid.Row="1"
                               VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled">
-                    <TextBlock Text="Краткое описание задачи."
-                               FontSize="16"
-                               Foreground="{StaticResource PlaceHolderText}"
-                               Margin="20"/>
+                              HorizontalScrollBarVisibility="Disabled"
+                              Margin="0 0 0 15">
+                    <ListView ItemsSource="{Binding UserTasks}"
+                              SelectedItem="{Binding SelectedTask}"
+                              Grid.Row="2"
+                              Margin="15"
+                              Background="#FFF5F7FA"
+                              BorderThickness="0"
+                              HorizontalContentAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="8" 
+                                        Margin="0 5"
+                                        BorderBrush="#FFD1C4E9"
+                                        BorderThickness="1 1 1 4"
+                                        Background="#FFF3E5F5">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="15" ShadowDepth="1" Opacity="0.12" Color="#7B1FA2"/>
+                                    </Border.Effect>
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox VerticalAlignment="Center"
+                                                  IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                  CommandParameter="{Binding}"/>
+                                        <StackPanel Grid.Column="1" Margin="10 0">
+                                            <TextBlock Text="{Binding Title}" 
+                                                    FontWeight="Bold"
+                                                    Foreground="#FF4A148C"
+                                                    FontSize="18"/>
+                                            <TextBlock Text="{Binding Description}"
+                                                    Foreground="#FF757575"
+                                                    FontSize="15"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="2">
+                                            <Run Text="Дата" Foreground="#888888" FontSize="10"/>
+                                            <LineBreak/>
+                                            <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>
+                                            <LineBreak/>
+                                            <Run Text="Время" Foreground="#888888" FontSize="10"/>
+                                            <LineBreak/>
+                                            <Run Text="{Binding CurrentDate, StringFormat='{}{0:HH:mm}'}" FontSize="12"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </ScrollViewer>
-                <TextBlock Text="Дата: 15/06/2026"
-                           Background="{StaticResource AccentDark}"
-                           Grid.Row="2"
-                           Foreground="White"
-                           Padding="20 3"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left"/>
+                <Grid Grid.Row="2">
+                    <Button Style="{StaticResource DeleteButton}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Content="Удалить"
+                        Margin="80 0 0 0"
+                        Command="{Binding IDeleteTask}"
+                        CommandParameter="{Binding SelectedTask}"/>
+
+                    <Button Style="{StaticResource EditButton}"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 80 0"
+                        VerticalAlignment="Center"
+                        Command="{Binding IEditTask}"
+                        CommandParameter="{Binding SelectedTask}"
+                        Content="Редактировать"/>
+                </Grid>
             </Grid>
             <!--Check List-->
-            <Grid Grid.Row="1" Margin="0 20 0 0">
+            <Grid Grid.Row="1" Margin="0 10 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Style="{StaticResource Title}"
-               Text="Список выполненных задач"
-               VerticalAlignment="Center"
-               Margin="20 0 0 0"/>
+                           Text="Список выполненных задач"
+                           VerticalAlignment="Center"
+                           Margin="20 5 0 0"/>
 
                 <ListView ItemsSource="{Binding CompletedTasks}"
-              Background="Transparent"
-              BorderThickness="0"
-              Grid.Row="1">
+                          Background="Transparent"
+                          BorderThickness="0"
+                          Grid.Row="1">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="8" Margin="0 5" Background="#FFE8F5E9">
+                            <Border CornerRadius="8" 
+                                    Margin="0 5" 
+                                    Background="#FFF1F8E9"
+                                    BorderBrush="#FFC8E6C9"
+                                    BorderThickness="1">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10" 
+                                          ShadowDepth="1" 
+                                          Opacity="0.1" 
+                                          Color="#FF4CAF50"/>
+
+                                </Border.Effect>
                                 <Grid Margin="10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
+
                                     <CheckBox VerticalAlignment="Center"
-                                              IsChecked="{Binding IsCompleted}"
+                                              IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
-                                              CommandParameter="{Binding}"/>
+                                              CommandParameter="{Binding}"
+                                              Style="{StaticResource MaterialDesignCheckBox}"
+                                              Foreground="#FF4CAF50">
+
+                                        <CheckBox.Content>
+                                            <TextBlock Text="✓" 
+                                                       FontSize="16"
+                                                       Margin="5 0 0 0"
+                                                       Foreground="#FF4CAF50"
+                                                       Visibility="{Binding IsCompleted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+
                                     <StackPanel Grid.Column="1" Margin="10 0">
-                                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
-                                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding Title}" 
+                                           FontWeight="SemiBold"
+                                           Foreground="#FF2E7D32"
+                                           TextDecorations="Strikethrough"/>
+                                        <TextBlock Text="{Binding Description}" 
+                                           TextWrapping="Wrap"
+                                           Foreground="#FF81C784"
+                                           FontStyle="Italic"
+                                           TextDecorations="Strikethrough"/>
+                                    </StackPanel>
+
+
+                                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                        <TextBlock Text="Выполнено:"
+                                       Foreground="#FFA5D6A7"
+                                       FontSize="10"/>
+                                        <TextBlock Text="{Binding CompletionDate, StringFormat='{}{0:dd.MM.yyyy}'}"
+                                       Foreground="#FF4CAF50"
+                                       FontSize="12"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -238,30 +350,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-            <Grid Grid.Row="2">
-                <Button Style="{StaticResource DeleteButton}"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="Удалить"
-                        Margin="8 0 0 0"
-                        Command="{Binding IDeleteTask}"
-                        CommandParameter="{Binding SelectedItem, ElementName=UserTasksListView}"/>
-                <Button Style="{StaticResource EditButton}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Command="{Binding IEditTask}"
-                        CommandParameter="{Binding SelectedItem, ElementName=UserTasksListView}"
-                        Content="Редактировать"/>
-                <Button Style="{StaticResource ComplateButton}"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Command="{Binding ICompleteTask}"
-                        CommandParameter="{Binding SelectedItem, ElementName=UserTasksListView}"
-                        Content="Заврешить"/>
-            </Grid>
         </Grid>
         <Rectangle Fill="{StaticResource TaskStatusBackground}" Grid.Column="3"/>
-
-
     </Grid>
 </Window>
