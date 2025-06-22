@@ -42,28 +42,7 @@
         </Grid.ColumnDefinitions>
 
         <Rectangle Fill="{StaticResource AccentDark}"/>
-        <StackPanel Margin="10 15 10 10">
-            <!--ListIcon-->
-            <Button Style="{StaticResource TaskManagerButton}" Margin="0 0 0 10" Background="{StaticResource AccentDark}">
-                <Viewbox Width="35" Height="35">
-                    <Path Data="{StaticResource ListIcon}" Fill="White"/>
-                </Viewbox>
-            </Button>
-
-            <Button Style="{StaticResource TaskManagerButton}" Margin="0 0 0 20" Background="{StaticResource AccentDark}">
-                <Viewbox Width="35" Height="35">
-                    <Path Data="{StaticResource TickIcon}" Stroke="White" StrokeThickness="2.8"/>
-                </Viewbox>
-            </Button>
-
-            <Button Style="{StaticResource TaskManagerButton}" Background="{StaticResource AccentDark}">
-                <Viewbox Width="35" Height="35">
-                    <Path Data="{StaticResource TimerIcon}" Fill="White"/>
-                </Viewbox>
-            </Button>
-        </StackPanel>
         <Rectangle Fill="{StaticResource TaskListBackground}" Grid.Column="1"/>
-        <!--Task List Grid-->
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
