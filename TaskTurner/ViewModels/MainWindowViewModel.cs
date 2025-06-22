@@ -34,7 +34,7 @@ namespace TaskTurner.ViewModels
             DatabaseHelper.InitializeDatabase();
             _userId = userId;
             LoadTasks(userId);
-            _filteredTasksView = CollectionViewSource.GetDefaultView(UserTasks);
+            _filteredTasksView = new CollectionViewSource { Source = UserTasks }.View;
         }
         public ICommand IOpenNewWindow => new RelayCommand(OpenNewWindow);
         public ICommand IDeleteTask => new RelayCommand<object>(DeleteTask);

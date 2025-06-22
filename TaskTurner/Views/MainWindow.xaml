@@ -201,7 +201,8 @@
                               VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled"
                               Margin="0 0 0 15">
-                    <ListView ItemsSource="{Binding UserTasks}"
+                    <ListView x:Name="NoFilterUserTasksListView"
+                              ItemsSource="{Binding UserTasks}"
                               SelectedItem="{Binding SelectedTask}"
                               Grid.Row="2"
                               Margin="15"
@@ -333,10 +334,6 @@
                                            Foreground="#FF81C784"
                                            FontStyle="Italic"
                                            TextDecorations="Strikethrough"/>
-                                    </StackPanel>
-
-
-                                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
                                         <TextBlock Text="Выполнено:"
                                        Foreground="#FFA5D6A7"
                                        FontSize="10"/>
