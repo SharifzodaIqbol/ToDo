@@ -38,7 +38,6 @@
     </Style>
     <!--Search Button-->
     <Style x:Key="SearchButton" TargetType="Button">
-        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

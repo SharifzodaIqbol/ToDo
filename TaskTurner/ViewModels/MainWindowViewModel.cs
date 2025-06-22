@@ -14,6 +14,12 @@ namespace TaskTurner.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<TaskModel> UserTasks { get; set; } = new ObservableCollection<TaskModel>();
         public ObservableCollection<TaskModel> CompletedTasks { get; set; } = new ObservableCollection<TaskModel>();
+        public ICommand IOpenNewWindow => new RelayCommand(OpenNewWindow);
+        public ICommand IDeleteTask => new RelayCommand<object>(DeleteTask);
+        public ICommand IEditTask => new RelayCommand<object>(EditTask);
+        public ICommand ICompleteTask => new RelayCommand<object>(CompleteTask);
+        public ICommand ClearSearchCommand { get; }
+        public ICollectionView FilteredTasksView => _filteredTasksView;
         private bool _isCompleted;
         public bool IsCompleted
         {
@@ -34,13 +40,9 @@ namespace TaskTurner.ViewModels
             DatabaseHelper.InitializeDatabase();
             _userId = userId;
             LoadTasks(userId);
+            ClearSearchCommand = new RelayCommand(() => SearchText = "");
             _filteredTasksView = new CollectionViewSource { Source = UserTasks }.View;
         }
-        public ICommand IOpenNewWindow => new RelayCommand(OpenNewWindow);
-        public ICommand IDeleteTask => new RelayCommand<object>(DeleteTask);
-        public ICommand IEditTask => new RelayCommand<object>(EditTask);
-        public ICommand ICompleteTask => new RelayCommand<object>(CompleteTask);
-        public ICollectionView FilteredTasksView => _filteredTasksView;
         private TaskModel _selectedTask;
         public TaskModel SelectedTask
         {
