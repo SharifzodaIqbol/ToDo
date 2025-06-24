@@ -14,11 +14,6 @@
     
     <SolidColorBrush x:Key="PlaceHolderText" Color="#FFD4D4D4"/>
     <SolidColorBrush x:Key="PlaceHolderBorder" Color="#FF958888"/>
-    <!--Importance Colours-->
-    <SolidColorBrush x:Key="Importance-Low" Color="#FF0CAFF4"/>
-    <SolidColorBrush x:Key="Importance-Med" Color="#FF2AD985"/>
-    <SolidColorBrush x:Key="Importance-High" Color="#FFF4830C"/>
-    <SolidColorBrush x:Key="Importance-Crit" Color="#FFCA2C2C"/>
 
     <SolidColorBrush x:Key="Button-Complate" Color="#FF2AD985"/>
     <SolidColorBrush x:Key="Button-Complate-Over" Color="#FF65C295"/>
@@ -41,9 +36,14 @@
     <SolidColorBrush x:Key="Nav.Default" Color="Transparent"/>
     <SolidColorBrush x:Key="Nav.Over" Color="#FFBCD5E2"/>
     <SolidColorBrush x:Key="Nav.Click" Color="#FF551F98"/>
-    
+    <SolidColorBrush x:Key="HighPriorityBrush" Color="#FF5252"/>
+    <!-- Red 600 -->
+    <SolidColorBrush x:Key="MediumPriorityBrush" Color="#FF9100"/>
+    <!-- Orange 800 -->
+    <SolidColorBrush x:Key="LowPriorityBrush" Color="#388E3C"/>
+    <!-- Green 700 -->
+    <SolidColorBrush x:Key="NoPriorityBrush" Color="#616161"/>
     <SolidColorBrush x:Key="TaskListDescriptionUserText" Color="#FF8C8892"/>
-    
     <SolidColorBrush x:Key="TaskListTitle" Color="#FF6F6A76"/>
     
 </ResourceDictionary>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Добавить задачу" Height="300" Width="400" Background="{StaticResource TaskStatusBackground}">
+        Title="Добавить задачу" Height="400" Width="400" Background="{StaticResource TaskStatusBackground}">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,7 +13,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <TextBox x:Name="TaskTitleBox"
                  Grid.Row="1"
                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
@@ -23,20 +22,89 @@
                  SelectionBrush="LightGreen"
                  Foreground="{StaticResource TaskListTitle}"
                  Margin="0,0,0,15"/>
-        <TextBox x:Name="TaskDescriptionBox"
-                 Grid.Row="2"
-                 AcceptsReturn="True"
-                 TextWrapping="Wrap"
-                 VerticalScrollBarVisibility="Auto"
-                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                 materialDesign:HintAssist.Hint="Введите описание задачи"
-                 materialDesign:HintAssist.Foreground="Gray"
-                 materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"
-                 SelectionBrush="LightGreen"
-                 VerticalContentAlignment="Top"
-                 HorizontalContentAlignment="Left"
-                 Foreground="{StaticResource TaskListTitle}"
-                 Height="100"/>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="3" 
+                   Text="Выберите приоритет задачи"
+                   Style="{StaticResource Title}"
+                   FontSize="15"
+                   Margin="10 15"/>
+            <StackPanel Grid.Row="2">
+                <ComboBox x:Name="NamesComboBox" 
+                          SelectedItem="{Binding SelectedName}"
+                          Margin="10 50"
+                          Width="200"
+                          HorizontalAlignment="Left">
+                    <!-- Высокий приоритет -->
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon 
+                                Kind="AlertCircle" 
+                                Foreground="{StaticResource HighPriorityBrush}" 
+                                Width="16"
+                                Margin="0,0,8,0"/>
+                            <TextBlock 
+                                Text="Высокий" 
+                                Style="{StaticResource PriorityTextStyle}"
+                                Foreground="{StaticResource HighPriorityBrush}"
+                                FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <!-- Средний приоритет -->
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon 
+                                Kind="Alert" 
+                                Foreground="{StaticResource MediumPriorityBrush}" 
+                                Width="16"
+                                Margin="0,0,8,0"/>
+                            <TextBlock 
+                                Text="Средний" 
+                                Style="{StaticResource PriorityTextStyle}"
+                                Foreground="{StaticResource MediumPriorityBrush}"/>
+                        </StackPanel>
+                        <!-- Низкий приоритет -->
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon 
+                                Kind="Information" 
+                                Foreground="{StaticResource LowPriorityBrush}" 
+                                Width="16"
+                                Margin="0,0,8,0"/>
+                            <TextBlock 
+                                Text="Низкий" 
+                                Style="{StaticResource PriorityTextStyle}"
+                                Foreground="{StaticResource LowPriorityBrush}"/>
+                        </StackPanel>
+
+                        <!-- Без приоритета -->
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon 
+                                Kind="HelpCircle" 
+                                Foreground="{StaticResource NoPriorityBrush}" 
+                                Width="16"
+                                Margin="0,0,8,0"/>
+                        <TextBlock 
+                                Text="Без приоритета" 
+                                Style="{StaticResource PriorityTextStyle}"
+                                Foreground="{StaticResource NoPriorityBrush}"/>
+                    </StackPanel>
+                </ComboBox>
+            </StackPanel>
+            <TextBox x:Name="TaskDescriptionBox"
+             Grid.Row="1"
+             AcceptsReturn="True"
+             TextWrapping="Wrap"
+             VerticalScrollBarVisibility="Auto"
+             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+             materialDesign:HintAssist.Hint="Введите описание задачи"
+             materialDesign:HintAssist.Foreground="Gray"
+             materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"
+             SelectionBrush="LightGreen"
+             VerticalContentAlignment="Top"
+             HorizontalContentAlignment="Left"
+             Foreground="{StaticResource TaskListTitle}"/>
+        </Grid>
         <Button Content="Добавить" 
                 Grid.Row="3"
                 HorizontalAlignment="Right"

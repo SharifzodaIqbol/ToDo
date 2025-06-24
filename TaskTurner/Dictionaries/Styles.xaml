@@ -189,4 +189,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="PriorityTextStyle" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+        <Setter Property="Margin" Value="0,0,0,8"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
 </ResourceDictionary>
