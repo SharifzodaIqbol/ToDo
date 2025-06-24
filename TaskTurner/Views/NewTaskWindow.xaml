@@ -109,7 +109,7 @@
                 Grid.Row="3"
                 HorizontalAlignment="Right"
                 Width="100"
-                Margin="0,15,0,0"
+                Margin="0,15,2,0"
                 Background="#FF3CC641"
                 Foreground="White"
                 Cursor="Hand"
