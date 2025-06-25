@@ -1,5 +1,6 @@
 ﻿using System.Data.SQLite;
 using System.Windows;
+using System.Windows.Controls;
 using TaskTurner.Models;
 
 namespace TaskTurner.Views
@@ -20,20 +21,24 @@ namespace TaskTurner.Views
             {
                 TaskTitleBox.Text = _editingTask.Title;
                 TaskDescriptionBox.Text = _editingTask.Description;
+                ImportanceBox.Text = _editingTask.Description;
             }
         }
         private void CreateTask_Click(object sender, RoutedEventArgs e)
         {
             if (_editingTask != null &&
                 TaskTitleBox.Text == _editingTask.Title &&
-                 TaskDescriptionBox.Text == _editingTask.Description)
+                TaskDescriptionBox.Text == _editingTask.Description &&
+                ImportanceBox.Text == _editingTask.TaskImportance)  // Используем ComboBox вместо StackPanel
             {
                 this.DialogResult = false;
                 this.Close();
                 return;
             }
+
             string title = TaskTitleBox.Text.Trim();
             string description = TaskDescriptionBox.Text.Trim();
+            string taskimportance = ImportanceBox.SelectedValue?.ToString();
 
             if (string.IsNullOrWhiteSpace(title))
             {
@@ -46,28 +51,29 @@ namespace TaskTurner.Views
 
             if (_editingTask == null)
             {
-                // Создание новой задачи
-                string insertQuery = "INSERT INTO Tasks (UserId, Title, Description, IsCompleted) VALUES (@userId, @title, @desc, 0)";
+                string insertQuery = "INSERT INTO Tasks (UserId, Title, Description, IsCompleted, TaskImportance) VALUES (@userId, @title, @desc, 0, @taskImportance)";
                 using var command = new SQLiteCommand(insertQuery, connection);
                 command.Parameters.AddWithValue("@userId", _userId);
                 command.Parameters.AddWithValue("@title", title);
                 command.Parameters.AddWithValue("@desc", description);
+                command.Parameters.AddWithValue("@taskImportance", taskimportance);
                 command.ExecuteNonQuery();
             }
             else
             {
-                // Обновление существующей задачи
                 string updateQuery = @"
-                        UPDATE Tasks 
-                        SET Title = @title,
-                            Description = @desc,
-                            IsCompleted = @isCompleted 
-                        WHERE Id = @id";
+            UPDATE Tasks 
+            SET Title = @title,
+                Description = @desc,
+                IsCompleted = @isCompleted,
+                TaskImportance = @taskImportance
+            WHERE Id = @id";
 
                 using var command = new SQLiteCommand(updateQuery, connection);
                 command.Parameters.AddWithValue("@title", title);
                 command.Parameters.AddWithValue("@desc", description);
                 command.Parameters.AddWithValue("@isCompleted", _editingTask.IsCompleted);
+                command.Parameters.AddWithValue("@taskImportance", taskimportance);  // Используем новое значение
                 command.Parameters.AddWithValue("@id", _editingTask.Id);
                 command.ExecuteNonQuery();
             }

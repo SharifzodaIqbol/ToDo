@@ -23,6 +23,7 @@ namespace TaskTurner.DataService
                     Title TEXT NOT NULL,
                     Description TEXT,
                     IsCompleted INTEGER DEFAULT 0,
+                    TaskImportance TEXT,
                     FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
                 )";
 

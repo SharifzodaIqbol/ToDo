@@ -16,7 +16,7 @@ namespace TaskTurner.Models
         public string? Description { get; set; }
         public bool IsCompleted { get; set; }
         public DateTime CurrentDate { get; set; } = DateTime.Now;
-
+        public string TaskImportance { get; set; }
     }
 
     public enum TaskState
@@ -46,12 +46,5 @@ namespace TaskTurner.Models
         Projects,
         Goals
     }
-
-    public enum TaskImportance{
-        Low,
-        Medium,
-        High,
-        Critical
-        }
 }
 

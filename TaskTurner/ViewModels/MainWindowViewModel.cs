@@ -161,7 +161,7 @@ namespace TaskTurner.ViewModels
             connection.Open();
 
             var command = new SQLiteCommand(
-                "SELECT Id, Title, Description, IsCompleted FROM Tasks WHERE UserId = @userId",
+                "SELECT Id, Title, Description, IsCompleted, TaskImportance FROM Tasks WHERE UserId = @userId",
                 connection);
             command.Parameters.AddWithValue("@userId", userId);
 
@@ -174,7 +174,8 @@ namespace TaskTurner.ViewModels
                     UserId = userId,
                     Title = reader.GetString(1),
                     Description = reader.GetString(2),
-                    IsCompleted = reader.GetBoolean(3)
+                    IsCompleted = reader.GetBoolean(3),
+                    TaskImportance = reader.GetString(4)
                 };
 
                 if (task.IsCompleted)

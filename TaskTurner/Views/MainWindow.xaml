@@ -209,6 +209,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <CheckBox Cursor="Hand"
                                                   VerticalAlignment="Center"
@@ -224,7 +225,39 @@
                                                     Foreground="#FF757575"
                                                     FontSize="15"/>
                                         </StackPanel>
-                                        <TextBlock Grid.Column="2">
+                                        <TextBlock Grid.Column="2" Text="{Binding TaskImportance}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock" BasedOn="{StaticResource PriorityTextStyle}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding TaskImportance}" Value="Высокий">
+                                                            <Setter Property="Foreground" Value="{StaticResource HighPriorityBrush}"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                            <Setter Property="Margin" Value="0 0 10 0"/>
+                                                            <Setter Property="VerticalAlignment" Value="Top"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding TaskImportance}" Value="Средний">
+                                                            <Setter Property="Foreground" Value="{StaticResource MediumPriorityBrush}"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                            <Setter Property="Margin" Value="0 0 10 0"/>
+                                                            <Setter Property="VerticalAlignment" Value="Top"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding TaskImportance}" Value="Низкий">
+                                                            <Setter Property="Foreground" Value="{StaticResource LowPriorityBrush}"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                            <Setter Property="Margin" Value="0 0 10 0"/>
+                                                            <Setter Property="VerticalAlignment" Value="Top"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding TaskImportance}" Value="Без приоритета">
+                                                            <Setter Property="Foreground" Value="{StaticResource NoPriorityBrush}"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                            <Setter Property="Margin" Value="0 0 10 0"/>
+                                                            <Setter Property="VerticalAlignment" Value="Top"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="3">
                                             <Run Text="Дата" Foreground="#888888" FontSize="10"/>
                                             <LineBreak/>
                                             <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>

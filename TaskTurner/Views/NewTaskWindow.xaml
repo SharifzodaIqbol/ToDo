@@ -34,60 +34,50 @@
                    FontSize="15"
                    Margin="10 15"/>
             <StackPanel Grid.Row="2">
-                <ComboBox x:Name="NamesComboBox" 
-                          SelectedItem="{Binding SelectedName}"
+                <ComboBox x:Name="ImportanceBox" 
                           Margin="10 50"
                           Width="200"
-                          HorizontalAlignment="Left">
+                          HorizontalAlignment="Left"
+                          SelectedValuePath="Tag">
                     <!-- Высокий приоритет -->
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon 
+                    <StackPanel Orientation="Horizontal" Tag="Высокий">
+                        <materialDesign:PackIcon 
                                 Kind="AlertCircle" 
-                                Foreground="{StaticResource HighPriorityBrush}" 
-                                Width="16"
-                                Margin="0,0,8,0"/>
-                            <TextBlock 
-                                Text="Высокий" 
-                                Style="{StaticResource PriorityTextStyle}"
-                                Foreground="{StaticResource HighPriorityBrush}"
-                                FontWeight="SemiBold"/>
-                        </StackPanel>
+                                Style="{StaticResource PriorityIconStyle}"
+                                Foreground="{StaticResource HighPriorityBrush}"/>
+                        <TextBlock Text="Высокий" 
+                                Style="{StaticResource HighPriorityStyle}"/>
+                    </StackPanel>
                         <!-- Средний приоритет -->
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon 
+                    <StackPanel Orientation="Horizontal" Tag="Средний">
+                        <materialDesign:PackIcon 
                                 Kind="Alert" 
-                                Foreground="{StaticResource MediumPriorityBrush}" 
-                                Width="16"
-                                Margin="0,0,8,0"/>
-                            <TextBlock 
-                                Text="Средний" 
-                                Style="{StaticResource PriorityTextStyle}"
+                                Style="{StaticResource PriorityIconStyle}"
                                 Foreground="{StaticResource MediumPriorityBrush}"/>
-                        </StackPanel>
+                        <TextBlock 
+                                Text="Средний" 
+                                Style="{StaticResource MediumPriorityStyle}"/>
+                    </StackPanel>
                         <!-- Низкий приоритет -->
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon 
-                                Kind="Information" 
-                                Foreground="{StaticResource LowPriorityBrush}" 
-                                Width="16"
-                                Margin="0,0,8,0"/>
-                            <TextBlock 
-                                Text="Низкий" 
-                                Style="{StaticResource PriorityTextStyle}"
+                    <StackPanel Orientation="Horizontal" Tag="Низкий">
+                        <materialDesign:PackIcon 
+                                Kind="Alert" 
+                                Style="{StaticResource PriorityIconStyle}"
                                 Foreground="{StaticResource LowPriorityBrush}"/>
+                        <TextBlock 
+                                Text="Низкий" 
+                                Style="{StaticResource MediumPriorityStyle}"/>
                         </StackPanel>
 
                         <!-- Без приоритета -->
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Tag="Без приоритета">
                         <materialDesign:PackIcon 
-                                Kind="HelpCircle" 
-                                Foreground="{StaticResource NoPriorityBrush}" 
-                                Width="16"
-                                Margin="0,0,8,0"/>
+                                Kind="Alert" 
+                                Style="{StaticResource PriorityIconStyle}"
+                                Foreground="{StaticResource NoPriorityBrush}"/>
                         <TextBlock 
                                 Text="Без приоритета" 
-                                Style="{StaticResource PriorityTextStyle}"
-                                Foreground="{StaticResource NoPriorityBrush}"/>
+                                Style="{StaticResource NoPriorityStyle}"/>
                     </StackPanel>
                 </ComboBox>
             </StackPanel>
