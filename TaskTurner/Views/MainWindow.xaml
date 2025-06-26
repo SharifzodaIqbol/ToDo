@@ -332,25 +332,22 @@
                 <TextBlock Style="{StaticResource Title}"
                            Text="Список выполненных задач"
                            VerticalAlignment="Center"
-                           Margin="20 5 0 0"/>
+                           Margin="10 5 0 0"/>
 
                 <ListView ItemsSource="{Binding CompletedTasks}"
                           Background="Transparent"
-                          BorderThickness="0"
-                          Grid.Row="1">
+                          Grid.Row="1"
+                          Margin="25 0 0 0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border CornerRadius="8" 
                                     Margin="0 5" 
                                     Background="#FFF1F8E9"
                                     BorderBrush="#FFC8E6C9"
-                                    BorderThickness="1">
+                                    BorderThickness="1 1 1 4">
                                 <Border.Effect>
-                                    <DropShadowEffect BlurRadius="10" 
-                                          ShadowDepth="1" 
-                                          Opacity="0.1" 
-                                          Color="#FF4CAF50"/>
-                                </Border.Effect>
+                                    <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.12" Color="#FF4CAF50"/>
+                                    </Border.Effect>
                                 
                                 <Grid Margin="10">
                                     <Grid.ColumnDefinitions>
@@ -375,10 +372,10 @@
                                         </CheckBox.Content>
                                     </CheckBox>
 
-                                    <StackPanel Grid.Column="1" Margin="10 0" Width="400">
+                                    <StackPanel Grid.Column="1" Margin="10 0" Width="460" Height="63">
                                         <DockPanel>
                                             <TextBlock Text="{Binding Title}" 
-                                                   FontWeight="SemiBold"
+                                                   FontWeight="Bold"
                                                    Foreground="#FF2E7D32"
                                                    FontSize="18"
                                                    TextDecorations="Strikethrough"/>

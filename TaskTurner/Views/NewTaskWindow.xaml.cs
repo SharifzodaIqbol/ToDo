@@ -21,7 +21,7 @@ namespace TaskTurner.Views
             {
                 TaskTitleBox.Text = _editingTask.Title;
                 TaskDescriptionBox.Text = _editingTask.Description;
-                ImportanceBox.Text = _editingTask.Description;
+                ImportanceBox.SelectedValue = _editingTask.TaskImportance;
             }
         }
         private void CreateTask_Click(object sender, RoutedEventArgs e)
