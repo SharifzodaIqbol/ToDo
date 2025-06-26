@@ -29,7 +29,7 @@ namespace TaskTurner.Views
             if (_editingTask != null &&
                 TaskTitleBox.Text == _editingTask.Title &&
                 TaskDescriptionBox.Text == _editingTask.Description &&
-                ImportanceBox.Text == _editingTask.TaskImportance)  // Используем ComboBox вместо StackPanel
+                ImportanceBox.SelectedValue?.ToString() == _editingTask.TaskImportance)  // Используем ComboBox вместо StackPanel
             {
                 this.DialogResult = false;
                 this.Close();
@@ -77,7 +77,6 @@ namespace TaskTurner.Views
                 command.Parameters.AddWithValue("@id", _editingTask.Id);
                 command.ExecuteNonQuery();
             }
-
             this.DialogResult = true;
             this.Close();
         }

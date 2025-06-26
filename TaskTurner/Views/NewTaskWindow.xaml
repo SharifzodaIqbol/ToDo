@@ -34,11 +34,12 @@
                    FontSize="15"
                    Margin="10 15"/>
             <StackPanel Grid.Row="2">
-                <ComboBox x:Name="ImportanceBox" 
+                <ComboBox x:Name="ImportanceBox"
+                          SelectedValuePath="Tag"
                           Margin="10 50"
                           Width="200"
                           HorizontalAlignment="Left"
-                          SelectedValuePath="Tag">
+                          SelectedIndex="3">
                     <!-- Высокий приоритет -->
                     <StackPanel Orientation="Horizontal" Tag="Высокий">
                         <materialDesign:PackIcon 
@@ -82,18 +83,18 @@
                 </ComboBox>
             </StackPanel>
             <TextBox x:Name="TaskDescriptionBox"
-             Grid.Row="1"
-             AcceptsReturn="True"
-             TextWrapping="Wrap"
-             VerticalScrollBarVisibility="Auto"
-             Style="{StaticResource MaterialDesignOutlinedTextBox}"
-             materialDesign:HintAssist.Hint="Введите описание задачи"
-             materialDesign:HintAssist.Foreground="Gray"
-             materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"
-             SelectionBrush="LightGreen"
-             VerticalContentAlignment="Top"
-             HorizontalContentAlignment="Left"
-             Foreground="{StaticResource TaskListTitle}"/>
+                     Grid.Row="1"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     materialDesign:HintAssist.Hint="Введите описание задачи"
+                     materialDesign:HintAssist.Foreground="Gray"
+                     materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"
+                     SelectionBrush="LightGreen"
+                     VerticalContentAlignment="Top"
+                     HorizontalContentAlignment="Left"
+                     Foreground="{StaticResource TaskListTitle}"/>
         </Grid>
         <Button Content="Добавить" 
                 Grid.Row="3"

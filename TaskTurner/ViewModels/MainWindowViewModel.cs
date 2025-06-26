@@ -175,7 +175,7 @@ namespace TaskTurner.ViewModels
                     Title = reader.GetString(1),
                     Description = reader.GetString(2),
                     IsCompleted = reader.GetBoolean(3),
-                    TaskImportance = reader.GetString(4)
+                    TaskImportance = reader.IsDBNull(4) ? "Без приоритета" : reader.GetString(4)
                 };
 
                 if (task.IsCompleted)
