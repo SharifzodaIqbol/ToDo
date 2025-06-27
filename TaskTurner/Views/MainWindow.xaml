@@ -335,96 +335,104 @@
                            Margin="10 5 0 0"/>
 
                 <ListView ItemsSource="{Binding CompletedTasks}"
-                          Background="Transparent"
-                          Grid.Row="1"
-                          Margin="25 0 0 0">
+                      Background="Transparent"
+                      Grid.Row="1"
+                      Margin="25 0 0 0"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="8" 
-                                    Margin="0 5" 
-                                    Background="#FFF1F8E9"
-                                    BorderBrush="#FFC8E6C9"
-                                    BorderThickness="1 1 1 4">
+                            <Border CornerRadius="8"
+                                Margin="0 5"
+                                Background="#FFF1F8E9"
+                                BorderBrush="#FFC8E6C9"
+                                BorderThickness="1 1 1 4">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.12" Color="#FF4CAF50"/>
-                                    </Border.Effect>
-                                
+                                </Border.Effect>
+
                                 <Grid Margin="10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <CheckBox Cursor="Hand"
-                                              VerticalAlignment="Center"
-                                              IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
-                                              CommandParameter="{Binding}"
-                                              Style="{StaticResource MaterialDesignCheckBox}"
-                                              Foreground="#FF4CAF50">
+                                    <CheckBox Grid.Column="0"
+                                          Cursor="Hand"
+                                          VerticalAlignment="Center"
+                                          IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                          CommandParameter="{Binding}"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Foreground="#FF4CAF50"/>
 
-                                        <CheckBox.Content>
-                                            <TextBlock Text="✓" 
-                                                       FontSize="16"
-                                                       Margin="5 0 0 0"
-                                                       Foreground="#FF4CAF50"
-                                                       Visibility="{Binding IsCompleted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                        </CheckBox.Content>
-                                    </CheckBox>
+                                    <StackPanel Grid.Column="1" Margin="10 0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                                    <StackPanel Grid.Column="1" Margin="10 0" Width="460" Height="63">
-                                        <DockPanel>
-                                            <TextBlock Text="{Binding Title}" 
-                                                   FontWeight="Bold"
-                                                   Foreground="#FF2E7D32"
-                                                   FontSize="18"
-                                                   TextDecorations="Strikethrough"/>
-                                            <TextBlock Grid.Row="2" Text="{Binding TaskImportance}" 
-                                                   HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <TextBlock Grid.Column="0"
+                                               Text="{Binding Title}"
+                                               FontWeight="Bold"
+                                               Foreground="#FF2E7D32"
+                                               FontSize="18"
+                                               TextDecorations="Strikethrough"
+                                               TextWrapping="Wrap"  VerticalAlignment="Center"
+                                               Margin="0 0 10 0"/>
+
+                                            <TextBlock Grid.Column="1"
+                                               Text="{Binding TaskImportance}"
+                                               HorizontalAlignment="Right" VerticalAlignment="Top"
+                                               Margin="0 0 10 0">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock" BasedOn="{StaticResource PriorityTextStyle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding TaskImportance}" Value="Высокий">
                                                                 <Setter Property="Foreground" Value="{StaticResource HighPriorityBrush}"/>
                                                                 <Setter Property="FontWeight" Value="Bold"/>
-                                                                <Setter Property="Margin" Value="0 0 10 0"/>
-                                                                <Setter Property="VerticalAlignment" Value="Top"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding TaskImportance}" Value="Средний">
                                                                 <Setter Property="Foreground" Value="{StaticResource MediumPriorityBrush}"/>
                                                                 <Setter Property="FontWeight" Value="Bold"/>
-                                                                <Setter Property="Margin" Value="0 0 10 0"/>
-                                                                <Setter Property="VerticalAlignment" Value="Top"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding TaskImportance}" Value="Низкий">
                                                                 <Setter Property="Foreground" Value="{StaticResource LowPriorityBrush}"/>
                                                                 <Setter Property="FontWeight" Value="Bold"/>
-                                                                <Setter Property="Margin" Value="0 0 10 0"/>
-                                                                <Setter Property="VerticalAlignment" Value="Top"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding TaskImportance}" Value="Без приоритета">
                                                                 <Setter Property="Foreground" Value="{StaticResource NoPriorityBrush}"/>
                                                                 <Setter Property="FontWeight" Value="Bold"/>
-                                                                <Setter Property="Margin" Value="0 0 10 0"/>
-                                                                <Setter Property="VerticalAlignment" Value="Top"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
-                                        </DockPanel>
-                                        <TextBlock Text="{Binding Description}" 
-                                                   TextWrapping="Wrap"
-                                                   Foreground="#FF81C784"
-                                                   FontStyle="Italic"
-                                                   FontSize="15"
-                                                   TextDecorations="Strikethrough"/>
+
+                                            <TextBlock Grid.Column="2"
+                                                HorizontalAlignment="Right" VerticalAlignment="Top">
+                                                <Run Text="Дата" Foreground="#888888" FontSize="10"/>
+                                                <LineBreak/>
+                                                <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>
+                                                <LineBreak/>
+                                                <Run Text="Время" Foreground="#888888" FontSize="10"/>
+                                                <LineBreak/>
+                                                <Run Text="{Binding CurrentDate, StringFormat='{}{0:HH:mm}'}" FontSize="12"/>
+                                            </TextBlock>
+                                        </Grid>
+
+                                        <TextBlock Text="{Binding Description}"
+                                               TextWrapping="Wrap"
+                                               Foreground="#FF81C784"
+                                               FontStyle="Italic"
+                                               FontSize="15"
+                                               TextDecorations="Strikethrough"
+                                               Margin="0 5 0 0"/>
                                         <TextBlock Text="Выполнено:"
-                                                   Foreground="#FFA5D6A7"
-                                                   FontSize="13"/>
-                                        <TextBlock Text="{Binding CompletionDate, StringFormat='{}{0:dd.MM.yyyy}'}"
-                                                   Foreground="#FF4CAF50"
-                                                   FontSize="12"/>
+                                               Foreground="#FFA5D6A7"
+                                               FontSize="13"
+                                               Margin="0 5 0 0"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
