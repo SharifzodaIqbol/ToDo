@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <TextBox x:Name="TaskTitleBox"
                  Grid.Row="1"
+                 TextWrapping="Wrap"
                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                  materialDesign:HintAssist.Hint="Введите название задачи"
                  materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"

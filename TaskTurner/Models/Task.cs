@@ -18,33 +18,5 @@ namespace TaskTurner.Models
         public DateTime CurrentDate { get; set; } = DateTime.Now;
         public string TaskImportance { get; set; }
     }
-
-    public enum TaskState
-    {
-        InProgress,
-        Complete,
-        NotStarted,
-        Late,
-        Archived,
-        Deleted
-    }
-
-    public enum TaskCategory
-    {
-        Work,
-        Personal,
-        Home,
-        Health,
-        Finance,
-        Shopping,
-        SocialFamily,
-        Education,
-        Travel,
-        Errands,
-        Hobbies,
-        VolunteeringCommunity,
-        Projects,
-        Goals
-    }
 }
 

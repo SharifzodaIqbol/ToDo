@@ -10,30 +10,7 @@
         Title="MainWindow" Height="832" Width="1280"
         MinWidth="1150" MinHeight="500"
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <Storyboard x:Key="Solid On Load">
-            <DoubleAnimation Storyboard.TargetName="MainGrid" 
-                             Storyboard.TargetProperty="Opacity" 
-                             From="0.2" To="1.0" Duration="0:0:1">
-                <DoubleAnimation.EasingFunction>
-                    <CubicEase EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <ThicknessAnimation Storyboard.TargetName="MainGrid"
-                                Storyboard.TargetProperty="Margin" 
-                                From="0,50,0,0" To="0,0,0,0" Duration="0:0:1.5">
-                <ThicknessAnimation.EasingFunction>
-                    <CubicEase EasingMode="EaseOut"/>
-                </ThicknessAnimation.EasingFunction>
-            </ThicknessAnimation>
-        </Storyboard>
-    </Window.Resources>
-    <Grid x:Name="MainGrid" Opacity="1" Margin="0">
-        <Grid.Triggers>
-            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                <BeginStoryboard Storyboard="{StaticResource Solid On Load}"/>
-            </EventTrigger>
-        </Grid.Triggers>
+    <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="435" />
@@ -145,13 +122,15 @@
                                           CommandParameter="{Binding}"/>
                                 <StackPanel Grid.Column="1" 
                                             Margin="10 0">
-                                    <TextBlock Text="{Binding Title}" 
+                                    <TextBlock Text="{Binding Title}"
+                                               TextWrapping="Wrap"
                                                 FontWeight="Bold"
                                                 Foreground="#FF4A148C"
                                                 FontSize="18"/>
                                     <TextBlock Text="{Binding Description}"
-                                                Foreground="#FF757575"
-                                                FontSize="15"/>
+                                               TextWrapping="Wrap" 
+                                               Foreground="#FF757575"
+                                               FontSize="15"/>
                                 </StackPanel>
                                 <TextBlock Grid.Column="3">
                                     <Run Text="Дата" Foreground="#888888" FontSize="10"/>
@@ -252,11 +231,13 @@
                                         <StackPanel Grid.Column="1" Margin="10 0">
                                             <TextBlock Text="{Binding Title}" 
                                                     FontWeight="Bold"
+                                                    TextWrapping="Wrap"
                                                     Foreground="#FF4A148C"
                                                     FontSize="18"/>
                                             <TextBlock Text="{Binding Description}"
-                                                    Foreground="#FF757575"
-                                                    FontSize="15"/>
+                                                       TextWrapping="Wrap"
+                                                       Foreground="#FF757575"
+                                                       FontSize="15"/>
                                         </StackPanel>
                                         <TextBlock Grid.Column="2" Text="{Binding TaskImportance}">
                                             <TextBlock.Style>
@@ -354,6 +335,8 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
                                     <CheckBox Grid.Column="0"
@@ -364,76 +347,68 @@
                                           CommandParameter="{Binding}"
                                           Style="{StaticResource MaterialDesignCheckBox}"
                                           Foreground="#FF4CAF50"/>
-
                                     <StackPanel Grid.Column="1" Margin="10 0">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <TextBlock Grid.Column="0"
-                                               Text="{Binding Title}"
-                                               FontWeight="Bold"
-                                               Foreground="#FF2E7D32"
-                                               FontSize="18"
-                                               TextDecorations="Strikethrough"
-                                               TextWrapping="Wrap"  VerticalAlignment="Center"
-                                               Margin="0 0 10 0"/>
-
-                                            <TextBlock Grid.Column="1"
-                                               Text="{Binding TaskImportance}"
-                                               HorizontalAlignment="Right" VerticalAlignment="Top"
-                                               Margin="0 0 10 0">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource PriorityTextStyle}">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding TaskImportance}" Value="Высокий">
-                                                                <Setter Property="Foreground" Value="{StaticResource HighPriorityBrush}"/>
-                                                                <Setter Property="FontWeight" Value="Bold"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding TaskImportance}" Value="Средний">
-                                                                <Setter Property="Foreground" Value="{StaticResource MediumPriorityBrush}"/>
-                                                                <Setter Property="FontWeight" Value="Bold"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding TaskImportance}" Value="Низкий">
-                                                                <Setter Property="Foreground" Value="{StaticResource LowPriorityBrush}"/>
-                                                                <Setter Property="FontWeight" Value="Bold"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding TaskImportance}" Value="Без приоритета">
-                                                                <Setter Property="Foreground" Value="{StaticResource NoPriorityBrush}"/>
-                                                                <Setter Property="FontWeight" Value="Bold"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Column="2"
-                                                HorizontalAlignment="Right" VerticalAlignment="Top">
-                                                <Run Text="Дата" Foreground="#888888" FontSize="10"/>
-                                                <LineBreak/>
-                                                <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>
-                                                <LineBreak/>
-                                                <Run Text="Время" Foreground="#888888" FontSize="10"/>
-                                                <LineBreak/>
-                                                <Run Text="{Binding CurrentDate, StringFormat='{}{0:HH:mm}'}" FontSize="12"/>
-                                            </TextBlock>
-                                        </Grid>
-
+                                        <TextBlock Text="{Binding Title}"
+                                                FontWeight="Bold"
+                                                Foreground="#FF2E7D32"
+                                                FontSize="18"
+                                                TextDecorations="Strikethrough"
+                                                TextWrapping="Wrap" 
+                                                VerticalAlignment="Center"
+                                                Margin="0 0 10 0"/>
                                         <TextBlock Text="{Binding Description}"
-                                               TextWrapping="Wrap"
-                                               Foreground="#FF81C784"
-                                               FontStyle="Italic"
-                                               FontSize="15"
-                                               TextDecorations="Strikethrough"
-                                               Margin="0 5 0 0"/>
+                                           TextWrapping="Wrap"
+                                            Foreground="#FF81C784"
+                                            FontStyle="Italic"
+                                            FontSize="15"
+                                            TextDecorations="Strikethrough"
+                                            Margin="0 5 0 0"/>
                                         <TextBlock Text="Выполнено:"
-                                               Foreground="#FFA5D6A7"
-                                               FontSize="13"
-                                               Margin="0 5 0 0"/>
+                                           Foreground="#FFA5D6A7"
+                                           FontSize="13"
+                                           Margin="0 5 0 0"/>
                                     </StackPanel>
+                                    <TextBlock Grid.Column="2" Text="{Binding TaskImportance}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource PriorityTextStyle}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TaskImportance}" Value="Высокий">
+                                                        <Setter Property="Foreground" Value="{StaticResource HighPriorityBrush}"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Setter Property="Margin" Value="0 0 10 0"/>
+                                                        <Setter Property="VerticalAlignment" Value="Top"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding TaskImportance}" Value="Средний">
+                                                        <Setter Property="Foreground" Value="{StaticResource MediumPriorityBrush}"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Setter Property="Margin" Value="0 0 10 0"/>
+                                                        <Setter Property="VerticalAlignment" Value="Top"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding TaskImportance}" Value="Низкий">
+                                                        <Setter Property="Foreground" Value="{StaticResource LowPriorityBrush}"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Setter Property="Margin" Value="0 0 10 0"/>
+                                                        <Setter Property="VerticalAlignment" Value="Top"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding TaskImportance}" Value="Без приоритета">
+                                                        <Setter Property="Foreground" Value="{StaticResource NoPriorityBrush}"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Setter Property="Margin" Value="0 0 10 0"/>
+                                                        <Setter Property="VerticalAlignment" Value="Top"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="3">
+                                        <Run Text="Дата" Foreground="#888888" FontSize="10"/>
+                                        <LineBreak/>
+                                        <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>
+                                        <LineBreak/>
+                                        <Run Text="Время" Foreground="#888888" FontSize="10"/>
+                                        <LineBreak/>
+                                        <Run Text="{Binding CurrentDate, StringFormat='{}{0:HH:mm}'}" FontSize="12"/>
+                                    </TextBlock>
                                 </Grid>
                             </Border>
                         </DataTemplate>
