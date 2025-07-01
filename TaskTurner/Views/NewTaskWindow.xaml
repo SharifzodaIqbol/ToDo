@@ -5,107 +5,111 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Добавить задачу" Height="400" Width="400" Background="{StaticResource TaskStatusBackground}">
+        Title="Новая задача" Height="Auto" Width="450"
+        SizeToContent="Height"
+        TextElement.FontSize="14"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
+        Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style TargetType="ComboBoxItem" x:Key="ImportanceComboBoxItemStyle">
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Foreground}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Низкая">
+                    <Setter Property="Foreground" Value="Green" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Средняя">
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Высокая">
+                    <Setter Property="Foreground" Value="Orange" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Критическая">
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Без приоритета">
+                    <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.SecondaryText}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="TaskTitleBox"
-                 Grid.Row="1"
-                 TextWrapping="Wrap"
-                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                 materialDesign:HintAssist.Hint="Введите название задачи"
-                 materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"
-                 materialDesign:HintAssist.Foreground="Gray"
-                 SelectionBrush="LightGreen"
-                 Foreground="{StaticResource TaskListTitle}"
-                 Margin="0,0,0,15"/>
-        <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="3" 
-                   Text="Выберите приоритет задачи"
-                   Style="{StaticResource Title}"
-                   FontSize="15"
-                   Margin="10 15"/>
-            <StackPanel Grid.Row="2">
-                <ComboBox x:Name="ImportanceBox"
-                          SelectedValuePath="Tag"
-                          Margin="10 50"
-                          Width="200"
-                          HorizontalAlignment="Left"
-                          SelectedIndex="3">
-                    <!-- Высокий приоритет -->
-                    <StackPanel Orientation="Horizontal" Tag="Высокий">
-                        <materialDesign:PackIcon 
-                                Kind="AlertCircle" 
-                                Style="{StaticResource PriorityIconStyle}"
-                                Foreground="{StaticResource HighPriorityBrush}"/>
-                        <TextBlock Text="Высокий" 
-                                Style="{StaticResource HighPriorityStyle}"/>
-                    </StackPanel>
-                        <!-- Средний приоритет -->
-                    <StackPanel Orientation="Horizontal" Tag="Средний">
-                        <materialDesign:PackIcon 
-                                Kind="Alert" 
-                                Style="{StaticResource PriorityIconStyle}"
-                                Foreground="{StaticResource MediumPriorityBrush}"/>
-                        <TextBlock 
-                                Text="Средний" 
-                                Style="{StaticResource MediumPriorityStyle}"/>
-                    </StackPanel>
-                        <!-- Низкий приоритет -->
-                    <StackPanel Orientation="Horizontal" Tag="Низкий">
-                        <materialDesign:PackIcon 
-                                Kind="Alert" 
-                                Style="{StaticResource PriorityIconStyle}"
-                                Foreground="{StaticResource LowPriorityBrush}"/>
-                        <TextBlock 
-                                Text="Низкий" 
-                                Style="{StaticResource MediumPriorityStyle}"/>
-                        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-                        <!-- Без приоритета -->
-                    <StackPanel Orientation="Horizontal" Tag="Без приоритета">
-                        <materialDesign:PackIcon 
-                                Kind="Alert" 
-                                Style="{StaticResource PriorityIconStyle}"
-                                Foreground="{StaticResource NoPriorityBrush}"/>
-                        <TextBlock 
-                                Text="Без приоритета" 
-                                Style="{StaticResource NoPriorityStyle}"/>
-                    </StackPanel>
-                </ComboBox>
-            </StackPanel>
-            <TextBox x:Name="TaskDescriptionBox"
-                     Grid.Row="1"
-                     AcceptsReturn="True"
-                     TextWrapping="Wrap"
-                     VerticalScrollBarVisibility="Auto"
-                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     materialDesign:HintAssist.Hint="Введите описание задачи"
-                     materialDesign:HintAssist.Foreground="Gray"
-                     materialDesign:TextFieldAssist.UnderlineBrush="#FF3CC641"
-                     SelectionBrush="LightGreen"
-                     VerticalContentAlignment="Top"
-                     HorizontalContentAlignment="Left"
-                     Foreground="{StaticResource TaskListTitle}"/>
-        </Grid>
-        <Button Content="Добавить" 
-                Grid.Row="3"
-                HorizontalAlignment="Right"
-                Width="100"
-                Margin="0,15,2,0"
-                Background="#FF3CC641"
-                Foreground="White"
-                Cursor="Hand"
-                Click="CreateTask_Click"
-                Style="{StaticResource MaterialDesignRaisedButton}"/>
+        <materialDesign:PackIcon Kind="ClipboardTextOutline" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="0" Grid.Column="0"/>
+        <TextBox x:Name="TaskTitleBox"
+                 materialDesign:HintAssist.Hint="Название задачи"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Grid.Row="0" Grid.Column="1" Margin="0,8"/>
+
+        <materialDesign:PackIcon Kind="TextSubject" VerticalAlignment="Top" Margin="0,12,8,0" Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="TaskDescriptionBox"
+                 materialDesign:HintAssist.Hint="Описание задачи"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Grid.Row="1" Grid.Column="1" Margin="0,8" Height="80"
+                 TextWrapping="Wrap" AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto"/>
+
+        <materialDesign:PackIcon Kind="AlertCircleOutline" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="2" Grid.Column="0"/>
+        <ComboBox x:Name="ImportanceBox"
+                  materialDesign:HintAssist.Hint="Важность"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Grid.Row="2" Grid.Column="1" Margin="0,8"
+                  ItemContainerStyle="{StaticResource ImportanceComboBoxItemStyle}">
+            <ComboBoxItem Content="Низкая"/>
+            <ComboBoxItem Content="Средняя"/>
+            <ComboBoxItem Content="Высокая"/>
+            <ComboBoxItem Content="Критическая"/>
+            <ComboBoxItem Content="Без приоритета" IsSelected="True"/>
+        </ComboBox>
+
+        <materialDesign:PackIcon Kind="FolderOutline" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="3" Grid.Column="0"/>
+        <ComboBox x:Name="ProjectComboBox"
+                  materialDesign:HintAssist.Hint="Проект"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Grid.Row="3" Grid.Column="1" Margin="0,8"
+                  ItemsSource="{Binding Projects}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding SelectedProjectId, Mode=TwoWay}"/>
+
+        <materialDesign:PackIcon Kind="TagOutline" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="4" Grid.Column="0"/>
+        <ComboBox x:Name="CategoryComboBox"
+                  materialDesign:HintAssist.Hint="Категория"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Grid.Row="4" Grid.Column="1" Margin="0,8"
+                  ItemsSource="{Binding Categories}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding SelectedCategoryId, Mode=TwoWay}"/>
+
+        <materialDesign:PackIcon Kind="Pound" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="5" Grid.Column="0"/>
+        <ComboBox x:Name="TagComboBox"
+                 materialDesign:HintAssist.Hint="Тег"
+                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                 Grid.Row="5" Grid.Column="1" Margin="0,8"
+                 ItemsSource="{Binding Tags}"
+                 DisplayMemberPath="Name"
+                 SelectedValuePath="Id"
+                 SelectedValue="{Binding SelectedTagId, Mode=TwoWay}"/>
+
+        <Button Content="Сохранить задачу"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,20,0,0"
+                Click="CreateTask_Click"/>
     </Grid>
 </Window>

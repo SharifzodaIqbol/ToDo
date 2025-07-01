@@ -15,7 +15,7 @@
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="435" />
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="140" />
+            <ColumnDefinition Width="240" />
         </Grid.ColumnDefinitions>
 
         <Rectangle Fill="{StaticResource AccentDark}"/>
@@ -28,7 +28,6 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
-            <!-- Заголовок и кнопка -->
             <Label Style="{StaticResource Heading1}" Content="Задачи"/>
             <Button Style="{StaticResource RoundAccentButton}" 
             HorizontalAlignment="Right"
@@ -45,12 +44,11 @@
                 </Viewbox>
             </Button>
 
-            <!-- Поиск -->
             <TextBox x:Name="TaskSearchBox"
-                 Style="{StaticResource TaskListSearchBox}" 
-                 Grid.Row="1"
-                 Margin="15 0"
-                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                     Style="{StaticResource TaskListSearchBox}" 
+                     Grid.Row="1"
+                     Margin="15 0"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding FilterTasksCommand}"/>
                 </TextBox.InputBindings>
@@ -63,28 +61,28 @@
                    Foreground="{StaticResource Borders}"
                    Visibility="{Binding Text.IsEmpty, ElementName=TaskSearchBox, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <Button Style="{StaticResource SearchButton}"
-                    Grid.Row="1"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Margin="0 0 40 0"
-                    Padding="7"
-                    Background="White"
-                    BorderBrush="Transparent"
-                    Height="25" 
-                    Width="25">
+                     Grid.Row="1"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Center"
+                     Margin="0 0 40 0"
+                     Padding="7"
+                     Background="White"
+                     BorderBrush="Transparent"
+                     Height="25" 
+                     Width="25">
                 <Viewbox Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource Borders}"/>
                 </Viewbox>
             </Button>
             <Button Style="{StaticResource SearchButton}"
-                    Grid.Row="1"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Margin="0 0 80 0"
-                    Cursor="Hand"
-                    Width="15" 
-                    Height="15"
-                    Command="{Binding ClearSearchCommand}">
+                     Grid.Row="1"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Center"
+                     Margin="0 0 80 0"
+                     Cursor="Hand"
+                     Width="15" 
+                     Height="15"
+                     Command="{Binding ClearSearchCommand}">
                 <Viewbox Stretch="Uniform">
                     <Path Data="{StaticResource CloseIcon}" Fill="{StaticResource Borders}" Height="15" Stretch="Fill" Width="16" />
                 </Viewbox>
@@ -114,25 +112,31 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <CheckBox 
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <CheckBox Grid.Row="0" Grid.Column="0"
                                           Cursor="Hand"
                                           VerticalAlignment="Center"
                                           IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
                                           CommandParameter="{Binding}"/>
-                                <StackPanel Grid.Column="1" 
-                                            Margin="10 0">
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="10 0">
                                     <TextBlock Text="{Binding Title}"
                                                TextWrapping="Wrap"
-                                                FontWeight="Bold"
-                                                Foreground="#FF4A148C"
-                                                FontSize="18"/>
+                                               FontWeight="Bold"
+                                               Foreground="#FF4A148C"
+                                               FontSize="18"/>
                                     <TextBlock Text="{Binding Description}"
                                                TextWrapping="Wrap" 
                                                Foreground="#FF757575"
                                                FontSize="15"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="3">
+                                <TextBlock Grid.Row="0" Grid.Column="3">
                                     <Run Text="Дата" Foreground="#888888" FontSize="10"/>
                                     <LineBreak/>
                                     <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>
@@ -141,7 +145,7 @@
                                     <LineBreak/>
                                     <Run Text="{Binding CurrentDate, StringFormat='{}{0:HH:mm}'}" FontSize="12"/>
                                 </TextBlock>
-                                <TextBlock Grid.Column="2" Text="{Binding TaskImportance}">
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding TaskImportance}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock" BasedOn="{StaticResource PriorityTextStyle}">
                                             <Style.Triggers>
@@ -173,6 +177,22 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+
+                                <!-- Добавлены ProjectName и CategoryName -->
+                                <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="10 5 0 0">
+                                    <materialDesign:PackIcon Kind="Folder" Foreground="#FF673AB7" VerticalAlignment="Center" Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding ProjectName}" 
+                                               Foreground="#FF673AB7" 
+                                               FontSize="13" 
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center"/>
+                                    <materialDesign:PackIcon Kind="Label" Foreground="#FF00BCD4" VerticalAlignment="Center" Margin="15 0 5 0"/>
+                                    <TextBlock Text="{Binding CategoryName}" 
+                                               Foreground="#FF00BCD4" 
+                                               FontSize="13" 
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -223,23 +243,30 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <CheckBox Cursor="Hand"
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <CheckBox Grid.Row="0" Grid.Column="0" Cursor="Hand"
                                                   VerticalAlignment="Center"
                                                   IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
                                                   CommandParameter="{Binding}"/>
-                                        <StackPanel Grid.Column="1" Margin="10 0">
+                                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10 0">
                                             <TextBlock Text="{Binding Title}" 
-                                                    FontWeight="Bold"
-                                                    TextWrapping="Wrap"
-                                                    Foreground="#FF4A148C"
-                                                    FontSize="18"/>
+                                                       FontWeight="Bold"
+                                                       TextWrapping="Wrap"
+                                                       Foreground="#FF4A148C"
+                                                       FontSize="18"/>
                                             <TextBlock Text="{Binding Description}"
                                                        TextWrapping="Wrap"
                                                        Foreground="#FF757575"
                                                        FontSize="15"/>
                                         </StackPanel>
-                                        <TextBlock Grid.Column="2" Text="{Binding TaskImportance}">
+                                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding TaskImportance}">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock" BasedOn="{StaticResource PriorityTextStyle}">
                                                     <Style.Triggers>
@@ -271,7 +298,7 @@
                                                 </Style>
                                             </TextBlock.Style>
                                         </TextBlock>
-                                        <TextBlock Grid.Column="3">
+                                        <TextBlock Grid.Row="0" Grid.Column="3">
                                             <Run Text="Дата" Foreground="#888888" FontSize="10"/>
                                             <LineBreak/>
                                             <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>
@@ -280,6 +307,22 @@
                                             <LineBreak/>
                                             <Run Text="{Binding CurrentDate, StringFormat='{}{0:HH:mm}'}" FontSize="12"/>
                                         </TextBlock>
+
+                                        <!-- Добавлены ProjectName и CategoryName -->
+                                        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="10 5 0 0">
+                                            <materialDesign:PackIcon Kind="Folder" Foreground="#FF673AB7" VerticalAlignment="Center" Margin="0 0 5 0"/>
+                                            <TextBlock Text="{Binding ProjectName}" 
+                                                       Foreground="#FF673AB7" 
+                                                       FontSize="13" 
+                                                       FontWeight="SemiBold"
+                                                       VerticalAlignment="Center"/>
+                                            <materialDesign:PackIcon Kind="Label" Foreground="#FF00BCD4" VerticalAlignment="Center" Margin="15 0 5 0"/>
+                                            <TextBlock Text="{Binding CategoryName}" 
+                                                       Foreground="#FF00BCD4" 
+                                                       FontSize="13" 
+                                                       FontWeight="SemiBold"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -288,23 +331,22 @@
                 </ScrollViewer>
                 <Grid Grid.Row="2">
                     <Button Style="{StaticResource DeleteButton}"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="Удалить"
-                        Margin="80 0 0 0"
-                        Command="{Binding IDeleteTask}"
-                        CommandParameter="{Binding SelectedTask}"/>
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Content="Удалить"
+                            Margin="80 0 0 0"
+                            Command="{Binding IDeleteTask}"
+                            CommandParameter="{Binding SelectedTask}"/>
 
                     <Button Style="{StaticResource EditButton}"
-                        HorizontalAlignment="Right"
-                        Margin="0 0 80 0"
-                        VerticalAlignment="Center"
-                        Command="{Binding IEditTask}"
-                        CommandParameter="{Binding SelectedTask}"
-                        Content="Редактировать"/>
+                            HorizontalAlignment="Right"
+                            Margin="0 0 80 0"
+                            VerticalAlignment="Center"
+                            Command="{Binding IEditTask}"
+                            CommandParameter="{Binding SelectedTask}"
+                            Content="Редактировать"/>
                 </Grid>
             </Grid>
-            <!--Check List-->
             <Grid Grid.Row="1" Margin="0 10 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -316,17 +358,17 @@
                            Margin="10 5 0 0"/>
 
                 <ListView ItemsSource="{Binding CompletedTasks}"
-                      Background="Transparent"
-                      Grid.Row="1"
-                      Margin="25 0 0 0"
-                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                          Background="Transparent"
+                          Grid.Row="1"
+                          Margin="25 0 0 0"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border CornerRadius="8"
-                                Margin="0 5"
-                                Background="#FFF1F8E9"
-                                BorderBrush="#FFC8E6C9"
-                                BorderThickness="1 1 1 4">
+                                    Margin="0 5"
+                                    Background="#FFF1F8E9"
+                                    BorderBrush="#FFC8E6C9"
+                                    BorderThickness="1 1 1 4">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.12" Color="#FF4CAF50"/>
                                 </Border.Effect>
@@ -338,37 +380,43 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-                                    <CheckBox Grid.Column="0"
-                                          Cursor="Hand"
-                                          VerticalAlignment="Center"
-                                          IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
-                                          CommandParameter="{Binding}"
-                                          Style="{StaticResource MaterialDesignCheckBox}"
-                                          Foreground="#FF4CAF50"/>
-                                    <StackPanel Grid.Column="1" Margin="10 0">
+                                    <CheckBox Grid.Row="0" Grid.Column="0"
+                                              Cursor="Hand"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Command="{Binding DataContext.ICompleteTask, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                              CommandParameter="{Binding}"
+                                              Style="{StaticResource MaterialDesignCheckBox}"
+                                              Foreground="#FF4CAF50"/>
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="10 0">
                                         <TextBlock Text="{Binding Title}"
-                                                FontWeight="Bold"
-                                                Foreground="#FF2E7D32"
-                                                FontSize="18"
-                                                TextDecorations="Strikethrough"
-                                                TextWrapping="Wrap" 
-                                                VerticalAlignment="Center"
-                                                Margin="0 0 10 0"/>
+                                                   FontWeight="Bold"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FF2E7D32"
+                                                   FontSize="18"
+                                                   TextDecorations="Strikethrough"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0 0 10 0"/>
                                         <TextBlock Text="{Binding Description}"
-                                           TextWrapping="Wrap"
-                                            Foreground="#FF81C784"
-                                            FontStyle="Italic"
-                                            FontSize="15"
-                                            TextDecorations="Strikethrough"
-                                            Margin="0 5 0 0"/>
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FF81C784"
+                                                   FontStyle="Italic"
+                                                   FontSize="15"
+                                                   TextDecorations="Strikethrough"
+                                                   Margin="0 5 0 0"/>
                                         <TextBlock Text="Выполнено:"
-                                           Foreground="#FFA5D6A7"
-                                           FontSize="13"
-                                           Margin="0 5 0 0"/>
+                                                   Foreground="#FFA5D6A7"
+                                                   FontSize="13"
+                                                   Margin="0 5 0 0"/>
                                     </StackPanel>
-                                    <TextBlock Grid.Column="2" Text="{Binding TaskImportance}">
+                                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding TaskImportance}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock" BasedOn="{StaticResource PriorityTextStyle}">
                                                 <Style.Triggers>
@@ -400,7 +448,7 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <TextBlock Grid.Column="3">
+                                    <TextBlock Grid.Row="0" Grid.Column="3">
                                         <Run Text="Дата" Foreground="#888888" FontSize="10"/>
                                         <LineBreak/>
                                         <Run Text="{Binding CurrentDate, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="12"/>
@@ -409,6 +457,22 @@
                                         <LineBreak/>
                                         <Run Text="{Binding CurrentDate, StringFormat='{}{0:HH:mm}'}" FontSize="12"/>
                                     </TextBlock>
+
+                                    <!-- Добавлены ProjectName и CategoryName для выполненных задач -->
+                                    <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="10 5 0 0">
+                                        <materialDesign:PackIcon Kind="Folder" Foreground="#FF4CAF50" VerticalAlignment="Center" Margin="0 0 5 0"/>
+                                        <TextBlock Text="{Binding ProjectName}" 
+                                                   Foreground="#FF4CAF50" 
+                                                   FontSize="13" 
+                                                   FontWeight="SemiBold"
+                                                   VerticalAlignment="Center"/>
+                                        <materialDesign:PackIcon Kind="Label" Foreground="#FF8BC34A" VerticalAlignment="Center" Margin="15 0 5 0"/>
+                                        <TextBlock Text="{Binding CategoryName}" 
+                                                   Foreground="#FF8BC34A" 
+                                                   FontSize="13" 
+                                                   FontWeight="SemiBold"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -416,6 +480,23 @@
                 </ListView>
             </Grid>
         </Grid>
-        <Rectangle Fill="{StaticResource TaskStatusBackground}" Grid.Column="3"/>
+
+        <Grid Grid.Column="3" Background="{StaticResource TaskStatusBackground}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="15">
+                    <Label Content="Новый проект" Style="{StaticResource Heading1}" HorizontalAlignment="Center" FontSize="16"/>
+                    <TextBox Text="{Binding NewProjectName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TaskListSearchBox}" Margin="0 5 0 0"/>
+                    <Button Content="Добавить проект" HorizontalAlignment="Center" Command="{Binding AddProjectCommand}" Style="{StaticResource EditButton}" Margin="0 10 0 20"/>
+
+                    <Label Content="Новая категория" Style="{StaticResource Heading1}" HorizontalAlignment="Center" FontSize="16"/>
+                    <TextBox Text="{Binding NewCategoryName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TaskListSearchBox}" Margin="0 5 0 0"/>
+                    <Button Content="Добавить категорию" HorizontalAlignment="Center" Command="{Binding AddCategoryCommand}" Style="{StaticResource EditButton}" Margin="0 10 0 20"/>
+
+                    <Label Content="Новый тег" Style="{StaticResource Heading1}" HorizontalAlignment="Center" FontSize="16"/>
+                    <TextBox Text="{Binding NewTagName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TaskListSearchBox}" Margin="0 5 0 0"/>
+                    <Button Content="Добавить тег" HorizontalAlignment="Center" Command="{Binding AddTagCommand}" Style="{StaticResource EditButton}" Margin="0 10 0 0"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>
