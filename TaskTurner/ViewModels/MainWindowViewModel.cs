@@ -268,7 +268,7 @@ namespace TaskTurner.ViewModels
 
             // ОБНОВЛЕННЫЙ ЗАПРОС ДЛЯ ЗАДАЧ С JOIN
             var tasksCommand = new SQLiteCommand(
-    @"SELECT
+                 @"SELECT
                     t.Id, t.UserId, t.Title, t.Description, t.IsCompleted, t.TaskImportance, t.ProjectId, t.CategoryId, t.TagId,
                     p.Name AS ProjectName,
                     c.Name AS CategoryName,

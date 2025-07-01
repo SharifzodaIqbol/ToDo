@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Новая задача" Height="Auto" Width="450"
         SizeToContent="Height"
@@ -11,29 +12,6 @@
         Background="{DynamicResource MaterialDesign.Brush.Background}"
         Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
         WindowStartupLocation="CenterScreen">
-
-    <Window.Resources>
-        <Style TargetType="ComboBoxItem" x:Key="ImportanceComboBoxItemStyle">
-            <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Foreground}"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Низкая">
-                    <Setter Property="Foreground" Value="Green" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Средняя">
-                    <Setter Property="Foreground" Value="Blue" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Высокая">
-                    <Setter Property="Foreground" Value="Orange" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Критическая">
-                    <Setter Property="Foreground" Value="Red" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="Без приоритета">
-                    <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.SecondaryText}" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -66,15 +44,15 @@
 
         <materialDesign:PackIcon Kind="AlertCircleOutline" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="2" Grid.Column="0"/>
         <ComboBox x:Name="ImportanceBox"
-                  materialDesign:HintAssist.Hint="Важность"
-                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                  Grid.Row="2" Grid.Column="1" Margin="0,8"
-                  ItemContainerStyle="{StaticResource ImportanceComboBoxItemStyle}">
-            <ComboBoxItem Content="Низкая"/>
-            <ComboBoxItem Content="Средняя"/>
-            <ComboBoxItem Content="Высокая"/>
-            <ComboBoxItem Content="Критическая"/>
-            <ComboBoxItem Content="Без приоритета" IsSelected="True"/>
+          materialDesign:HintAssist.Hint="Важность"
+          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+          Grid.Row="2" Grid.Column="1" Margin="0,8">
+            <ComboBox.Items>
+                <System:String>Высокий</System:String>
+                <System:String>Средний</System:String>
+                <System:String>Низкий</System:String>
+                <System:String>Без приоритета</System:String>
+            </ComboBox.Items>
         </ComboBox>
 
         <materialDesign:PackIcon Kind="FolderOutline" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="3" Grid.Column="0"/>
@@ -99,13 +77,13 @@
 
         <materialDesign:PackIcon Kind="Pound" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="5" Grid.Column="0"/>
         <ComboBox x:Name="TagComboBox"
-                 materialDesign:HintAssist.Hint="Тег"
-                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                 Grid.Row="5" Grid.Column="1" Margin="0,8"
-                 ItemsSource="{Binding Tags}"
-                 DisplayMemberPath="Name"
-                 SelectedValuePath="Id"
-                 SelectedValue="{Binding SelectedTagId, Mode=TwoWay}"/>
+                  materialDesign:HintAssist.Hint="Тег"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Grid.Row="5" Grid.Column="1" Margin="0,8"
+                  ItemsSource="{Binding Tags}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding SelectedTagId, Mode=TwoWay}"/>
 
         <Button Content="Сохранить задачу"
                 Style="{StaticResource MaterialDesignRaisedButton}"
