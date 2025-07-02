@@ -7,7 +7,6 @@ using System.Windows.Input;
 using TaskTurner.DataService;
 using TaskTurner.Models;
 using TaskTurner.Views;
-using System; // Required for ArgumentNullException if used in RelayCommand constructor
 
 namespace TaskTurner.ViewModels
 {
@@ -288,17 +287,17 @@ namespace TaskTurner.ViewModels
                     var task = new TaskModel
                     {
                         Id = reader.GetInt32(0),
-                        UserId = reader.GetInt32(1), // <<<< ИСПРАВЛЕНО: Читаем UserId из ридера
-                        Title = reader.GetString(2), // <<<< ИСПРАВЛЕНО: Смещено на +1
-                        Description = reader.GetString(3), // <<<< ИСПРАВЛЕНО: Смещено на +1
-                        IsCompleted = reader.GetBoolean(4), // <<<< ИСПРАВЛЕНО: Смещено на +1
-                        TaskImportance = reader.IsDBNull(5) ? "Без приоритета" : reader.GetString(5), // <<<< ИСПРАВЛЕНО: Смещено на +1
-                        ProjectId = reader.IsDBNull(6) ? (int?)null : reader.GetInt32(6), // <<<< ИСПРАВЛЕНО: Смещено на +1
-                        CategoryId = reader.IsDBNull(7) ? (int?)null : reader.GetInt32(7), // <<<< ИСПРАВЛЕНО: Смещено на +1
-                        ProjectName = reader.IsDBNull(9) ? "Без проекта" : reader.GetString(9), // <<<< ИСПРАВЛЕНО: Теперь 9 (ProjectName)
-                        CategoryName = reader.IsDBNull(10) ? "Без категории" : reader.GetString(10), // <<<< ИСПРАВЛЕНО: Теперь 10 (CategoryName)
-                        TagId = reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8), // <<<< ИСПРАВЛЕНО: Теперь 8 (TagId)
-                        TagName = reader.IsDBNull(11) ? "Без тега" : reader.GetString(11) // <<<< ИСПРАВЛЕНО: Теперь 11 (TagName)
+                        UserId = reader.GetInt32(1),
+                        Title = reader.GetString(2),
+                        Description = reader.GetString(3),
+                        IsCompleted = reader.GetBoolean(4),
+                        TaskImportance = reader.IsDBNull(5) ? "Без приоритета" : reader.GetString(5),
+                        ProjectId = reader.IsDBNull(6) ? (int?)null : reader.GetInt32(6),
+                        CategoryId = reader.IsDBNull(7) ? (int?)null : reader.GetInt32(7),
+                        ProjectName = reader.IsDBNull(9) ? "Без проекта" : reader.GetString(9),
+                        CategoryName = reader.IsDBNull(10) ? "Без категории" : reader.GetString(10),
+                        TagId = reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8),
+                        TagName = reader.IsDBNull(11) ? "Без тега" : reader.GetString(11)
                     };
 
                     if (task.IsCompleted)

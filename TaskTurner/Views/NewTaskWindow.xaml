@@ -42,11 +42,99 @@
                  TextWrapping="Wrap" AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto"/>
 
-        <materialDesign:PackIcon Kind="AlertCircleOutline" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="2" Grid.Column="0"/>
-        <ComboBox x:Name="ImportanceBox"
-          materialDesign:HintAssist.Hint="Важность"
-          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-          Grid.Row="2" Grid.Column="1" Margin="0,8">
+        <!-- Иконка -->
+        <materialDesign:PackIcon 
+            Kind="AlertCircleOutline" 
+            VerticalAlignment="Center" 
+            Margin="0,0,8,0" 
+            Grid.Row="2" Grid.Column="0"/>
+
+        <!-- ComboBox -->
+        <ComboBox 
+            x:Name="ImportanceBox"
+            materialDesign:HintAssist.Hint="Важность"
+            Grid.Row="2" Grid.Column="1" 
+            Margin="0,8"
+            SelectedIndex="0">
+
+            <!-- Кастомный стиль для ComboBoxItem -->
+            <ComboBox.Resources>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Margin" Value="2"/>
+                    <Setter Property="Padding" Value="8,4"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ComboBoxItem">
+                                <Border 
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="4"
+                                    SnapsToDevicePixels="True">
+                                    <ContentPresenter 
+                                        VerticalAlignment="Center"
+                                        Margin="{TemplateBinding Padding}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#3D3D3D"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#555555"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="Высокий">
+                            <Setter Property="Background" Value="#FFF44336"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="Средний">
+                            <Setter Property="Background" Value="#FFFF9800"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="Низкий">
+                            <Setter Property="Background" Value="#FF4CAF50"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="Без приоритета">
+                            <Setter Property="Background" Value="#FF9E9E9E"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Resources>
+
+            <!-- Шаблон элемента с иконками -->
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon 
+                            VerticalAlignment="Center"
+                            Margin="0,0,8,0">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon">
+                                    <Setter Property="Kind" Value="InfoOutline"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding}" Value="Высокий">
+                                            <Setter Property="Kind" Value="AlertCircle"/>
+                                            <Setter Property="Foreground" Value="#FFF44336"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding}" Value="Средний">
+                                            <Setter Property="Kind" Value="Alert"/>
+                                            <Setter Property="Foreground" Value="#FFFF9800"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding}" Value="Низкий">
+                                            <Setter Property="Kind" Value="AlertOutline"/>
+                                            <Setter Property="Foreground" Value="#FF4CAF50"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+            <!-- Список приоритетов -->
             <ComboBox.Items>
                 <System:String>Высокий</System:String>
                 <System:String>Средний</System:String>
